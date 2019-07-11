@@ -35,11 +35,12 @@ public class GeneralController {
 	@Autowired
 	HangarRepository hangarRepository;
 	
-	
+	/*
 	@PostConstruct
 	public void init() {
 		hangarRepository.save(new Hangar("H02", "Sacramento"));
 		hangarRepository.save(new Hangar("H03", "Medellin"));
 	}
+	*/
 
 }
