@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.empresa.product.model.CreateProduct;
 import com.empresa.product.model.EditProduct;
 import com.empresa.product.model.Product;
-import com.empresa.product.model.ProductRequest;
 import com.empresa.product.service.ProductService;
 
 @RestController
@@ -36,12 +35,13 @@ public class ProductController {
 	@GetMapping("/product/{id}")
 	public Product getProduct(@PathVariable Long id) {
 		return productService.getProductById(id);
+	
 	}
 	
 	// New product
 	@PostMapping("/product")
-	public Product createProduct(@Validated(value = CreateProduct.class) @RequestBody ProductRequest reqProduct) {
-		return productService.createProduct(reqProduct);
+	public Product createProduct(@Validated(value = CreateProduct.class) @RequestBody Product product) {
+		return productService.createProduct(product);
 	}
 	
 	// Edit existing product
