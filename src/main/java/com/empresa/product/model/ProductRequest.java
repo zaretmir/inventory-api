@@ -6,6 +6,18 @@ public class ProductRequest {
 	
 	private String name;
 	
+	private String description;
+	
+	private int qty;
+	
+	public int getQty() {
+		return qty;
+	}
+
+	public void setQty(int qty) {
+		this.qty = qty;
+	}
+
 	private Long hangarId;
 	
 	private Hangar hangar;
@@ -36,8 +48,14 @@ public class ProductRequest {
 		this.name = name;
 	}
 	
-	// CONSTRUCTORS
-	
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
 	public ProductRequest() { }
 	
 	public ProductRequest(String name) {
