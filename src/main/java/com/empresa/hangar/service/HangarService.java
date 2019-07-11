@@ -13,8 +13,6 @@ public interface HangarService {
 	
 	//Hangar getHangarById();
 	
-	Boolean validFieldsById(Hangar hangar);
-	
 	void addProductToHangar(Product product);
 
 	Hangar createHangar(HangarRequest hangarRequest);

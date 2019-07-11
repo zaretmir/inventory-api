@@ -16,5 +16,9 @@ public interface HangarDAO {
 	Hangar createHangar(Hangar hangar);
 
 	Hangar getHangarById(long id);
+	
+	Boolean existsById(long id);
+
+	Boolean existsHangarByName(String name);
 
 }
