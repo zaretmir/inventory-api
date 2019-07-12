@@ -9,7 +9,6 @@ import org.springframework.web.server.ResponseStatusException;
 
 import com.empresa.hangar.dao.HangarDAO;
 import com.empresa.hangar.model.Hangar;
-import com.empresa.hangar.model.HangarRequest;
 import com.empresa.product.model.Product;
 
 @Service
@@ -50,20 +49,39 @@ public class HangarServiceImp implements HangarService {
 	}
 	
 	@Override
-	public Hangar createHangar(HangarRequest reqHangar) {
-		Hangar hangar = new Hangar(reqHangar.getName().trim(), reqHangar.getAddress());
+	public Hangar createHangar(Hangar hangar) {
+		
+		hangar.setName(hangar.getName().trim());
+		
 		validateMandatoryFields(hangar);
 		
 		if (hangarDAO.existsHangarByName(hangar.getName().trim()))
 				throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Hangar Name must be unique, choose a different name");
 		
-		return hangarDAO.createHangar(hangar);
+		return hangarDAO.save(hangar);
 	}
 	
 	
 	@Override
 	public void addProductToHangar(Product product) {
 		hangarDAO.addProductToHangar(product);
+	}
+
+	@Override
+	public Hangar updateHangar(Long id, Hangar update) {
+
+		if (update.getName() == null) {
+			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Hangar name cannot be null");
+		}
+		
+		if (!hangarDAO.existsById(id)) {
+			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Hangar not found");
+		}
+		
+		Hangar original = hangarDAO.getHangarById(id);
+		original.setName(update.getName());
+		
+		return hangarDAO.save(original);
 	}
 	
 

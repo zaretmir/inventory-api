@@ -25,7 +25,7 @@ public class HangarDAOImp implements HangarDAO {
 		return hangarRepository.getOne(hangarId);
 	}
 	
-	public Hangar createHangar(Hangar hangar) {
+	public Hangar save(Hangar hangar) {
 		return hangarRepository.save(hangar);
 	}
 	

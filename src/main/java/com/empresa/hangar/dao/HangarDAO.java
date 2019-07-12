@@ -13,12 +13,12 @@ public interface HangarDAO {
 	
 	void addProductToHangar(Product product);
 
-	Hangar createHangar(Hangar hangar);
-
 	Hangar getHangarById(long id);
 	
 	Boolean existsById(long id);
 
 	Boolean existsHangarByName(String name);
+
+	Hangar save(Hangar hangar);
 
 }
