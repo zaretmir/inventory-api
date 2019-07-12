@@ -2,14 +2,13 @@ package com.empresa.price.model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.ForeignKey;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
 import com.empresa.product.model.Product;
@@ -24,7 +23,7 @@ public class Price {
 	private long price_id;
 	
 	@ManyToOne
-	@JoinColumn(name="product_id"/*, foreignKey=@ForeignKey(name="product_id_fk")*/)
+	@JoinColumn(name="product_id", foreignKey=@ForeignKey(name="product_id_fk"))
 	@NotNull
 	private Product product;
 	

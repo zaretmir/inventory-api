@@ -1,5 +1,6 @@
 package com.empresa.product.model;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.ForeignKey;
@@ -31,7 +32,7 @@ public class Product {
 	private Integer qty;
 	
 
-	@ManyToOne
+	@ManyToOne(cascade=CascadeType.ALL)
 	@JoinColumn(name="hangar_id", foreignKey = @ForeignKey(name="hangar_id_fk"))
 	private Hangar hangar;
 	
