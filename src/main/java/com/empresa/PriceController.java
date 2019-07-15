@@ -3,6 +3,7 @@ package com.empresa;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -38,5 +39,16 @@ public class PriceController {
 	public List<Price> getAllEntries() {
 		return priceService.getAllEntries();
 	}
+	
+	@DeleteMapping("/delete/{id}")
+	public void deletePrice(@PathVariable("id") Long id) {
+		priceService.deleteById(id);
+	}
+	
+	@DeleteMapping("/delete/product/{id}")
+	public void deleteByProductId(@PathVariable("id") Long id) {
+		priceService.deleteByProductId(id);
+	}
+	
 
 }

@@ -13,4 +13,8 @@ public interface PriceDAO {
 
 	List<Price> getEntriesByProduct(Product product);
 
+	void deleteById(Long id);
+
+	void deleteByProductId(Long productId);
+
 }

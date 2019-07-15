@@ -14,4 +14,8 @@ public interface PriceService {
 
 	List<Price> getEntriesByProductId(Long productId);
 
+	void deleteById(Long id);
+
+	void deleteByProductId(Long id);
+
 }

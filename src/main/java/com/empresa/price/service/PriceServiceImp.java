@@ -62,4 +62,14 @@ public class PriceServiceImp implements PriceService {
 		return entries;
 	}
 
+	@Override
+	public void deleteById(Long id) {
+		priceDAO.deleteById(id);
+	}
+	
+	@Override
+	public void deleteByProductId(Long id) {
+		priceDAO.deleteByProductId(id);
+	}
+
 }

@@ -36,6 +36,14 @@ public class Price {
 	private Long dateUpdated;
 	
 	
+	public long getPrice_id() {
+		return price_id;
+	}
+
+	public void setPrice_id(long price_id) {
+		this.price_id = price_id;
+	}
+	
 
 	public Product getProduct() {
 		return product;

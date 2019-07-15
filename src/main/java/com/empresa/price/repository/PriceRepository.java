@@ -13,4 +13,6 @@ public interface PriceRepository extends JpaRepository<Price, Long>{
 	
 	List<Price> findByProductOrderByDateUpdatedDesc(Product product);
 
+	void deleteByProduct(Product product);
+
 }
