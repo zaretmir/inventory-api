@@ -73,8 +73,8 @@ public class ProductServiceImp implements ProductService {
 		validateMandatoryFields(product);
 		
 		// Hangar Service comprueba la existencia del hangar
-		Hangar hangar = hangarService.getHangarById(product.getHangar().getId());
-		product.setHangar(hangar);
+		//Hangar hangar = hangarService.getHangarById(product.getHangar().getId());
+		//product.setHangar(hangar);
 		
 		return productDAO.save(product);
 		
@@ -127,11 +127,13 @@ public class ProductServiceImp implements ProductService {
 		Optional<Product> longest = allProducts.stream().max(Comparator.comparingInt( a -> a.getName().length() ));
 		return longest;
 	}
-
+	
+	/*
 	@Override
 	public List<Product> getByHangar(Long id) {
 		List<Product> products = productDAO.findByHangar(id);
 		return products;
 	}
+	*/
 
 }

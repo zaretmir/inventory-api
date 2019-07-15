@@ -61,11 +61,12 @@ public class HangarServiceImp implements HangarService {
 		return hangarDAO.save(hangar);
 	}
 	
-	
+	/*
 	@Override
 	public void addProductToHangar(Product product) {
 		hangarDAO.addProductToHangar(product);
 	}
+	*/
 
 	@Override
 	public Hangar updateHangar(Long id, Hangar update) {

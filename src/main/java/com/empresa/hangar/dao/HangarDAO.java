@@ -11,7 +11,7 @@ public interface HangarDAO {
 	
 	Hangar getHangarById(Long hangarId);
 	
-	void addProductToHangar(Product product);
+	// void addProductToHangar(Product product);
 
 	Hangar getHangarById(long id);
 	

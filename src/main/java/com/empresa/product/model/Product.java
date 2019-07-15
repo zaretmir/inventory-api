@@ -31,11 +31,11 @@ public class Product {
 	@Column
 	private Integer qty;
 	
-
+	/*
 	@ManyToOne(cascade=CascadeType.ALL)
 	@JoinColumn(name="hangar_id", foreignKey = @ForeignKey(name="hangar_id_fk"))
 	private Hangar hangar;
-	
+	*/
 	public long getId() {
 		return id;
 	}
@@ -63,6 +63,8 @@ public class Product {
 	public void setQty(Integer qty) {
 		this.qty = qty;
 	}
+	
+	/*
 
 	public Hangar getHangar() {
 		return hangar;
@@ -71,6 +73,8 @@ public class Product {
 	public void setHangar(Hangar hangar) {
 		this.hangar = hangar;
 	}
+	
+	*/
 	
 	// CONSTRUCTORS
 
@@ -85,18 +89,18 @@ public class Product {
 		this.name = name;
 		this.description = description;
 		this.qty = qty;
-		this.hangar = hangar;
+		// this.hangar = hangar;
 	}
 	
 	public Product(String name, String description, int qty, Hangar hangar) {
 		this.name = name;
 		this.description = description;
 		this.qty = qty;
-		this.hangar = hangar;
+		// this.hangar = hangar;
 	}
 
 	public Product(Hangar hangar, String name) {
-		this.hangar = hangar;
+		// this.hangar = hangar;
 		this.name = name;
 	}
 

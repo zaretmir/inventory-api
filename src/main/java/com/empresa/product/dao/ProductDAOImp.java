@@ -40,14 +40,16 @@ public class ProductDAOImp implements ProductDAO {
 	
 	@Override
 	public Product save(Product product) {
-		hangarDAO.addProductToHangar(product);
+		//hangarDAO.addProductToHangar(product);
 		return productRepository.save(product);
 	}
+	/*
 
 	@Override
 	public List<Product> findByHangar(Long id) {
 		Hangar hangar = hangarRepository.findById(id).get();
 		return productRepository.findByHangar(hangar);
 	}
+	*/
 
 }

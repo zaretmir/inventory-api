@@ -29,11 +29,13 @@ public class HangarDAOImp implements HangarDAO {
 		return hangarRepository.save(hangar);
 	}
 	
+	/*
 	@Override
 	public void addProductToHangar(Product product) {
 		Hangar hangar = hangarRepository.getOne(product.getHangar().getId());
 		hangarRepository.save(hangar);
 	}
+	*/
 	
 	@Override
 	public Hangar getHangarById(long id) {

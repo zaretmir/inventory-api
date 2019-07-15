@@ -14,6 +14,6 @@ public interface ProductDAO {
 	
 	Product save(Product product);
 
-	List<Product> findByHangar(Long id);
+	//List<Product> findByHangar(Long id);
 
 }

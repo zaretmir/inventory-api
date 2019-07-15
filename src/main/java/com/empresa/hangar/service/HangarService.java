@@ -12,7 +12,7 @@ public interface HangarService {
 	
 	List<Hangar> getHangars();
 	
-	void addProductToHangar(Product product);
+	// void addProductToHangar(Product product);
 
 	Hangar createHangar(@Valid Hangar hangar);
 

@@ -19,7 +19,7 @@ public interface ProductService {
 	
 	List<Product> listProductsByFirstLetter(char letter);
 
-	List<Product> getByHangar(Long id);
+	//List<Product> getByHangar(Long id);
 
 	Product createProduct(Product product);
 }

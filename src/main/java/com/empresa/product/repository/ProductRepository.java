@@ -11,7 +11,7 @@ import com.empresa.product.model.Product;
 @Repository
 public interface ProductRepository extends JpaRepository<Product, Long>{
 
-	List<Product> findByHangar(Hangar hangar);
+	//List<Product> findByHangar(Hangar hangar);
 	
 
 }
