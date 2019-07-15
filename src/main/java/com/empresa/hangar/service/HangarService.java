@@ -2,8 +2,9 @@ package com.empresa.hangar.service;
 
 import java.util.List;
 
+import javax.validation.Valid;
+
 import com.empresa.hangar.model.Hangar;
-import com.empresa.hangar.model.HangarRequest;
 import com.empresa.product.model.Product;
 //test
 //test2
@@ -11,15 +12,13 @@ public interface HangarService {
 	
 	List<Hangar> getHangars();
 	
-	//Hangar getHangarById();
-	
-	Boolean validFieldsById(Hangar hangar);
-	
 	void addProductToHangar(Product product);
 
-	Hangar createHangar(HangarRequest hangarRequest);
+	Hangar createHangar(@Valid Hangar hangar);
 
 	Hangar getHangarById(long id);
+
+	Hangar updateHangar(Long id, Hangar update);
 
 
 }

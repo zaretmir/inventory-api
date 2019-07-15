@@ -25,7 +25,7 @@ public class HangarDAOImp implements HangarDAO {
 		return hangarRepository.getOne(hangarId);
 	}
 	
-	public Hangar createHangar(Hangar hangar) {
+	public Hangar save(Hangar hangar) {
 		return hangarRepository.save(hangar);
 	}
 	
@@ -38,6 +38,16 @@ public class HangarDAOImp implements HangarDAO {
 	@Override
 	public Hangar getHangarById(long id) {
 		return hangarRepository.findById(id).get();
+	}
+	
+	@Override
+	public Boolean existsById(long id) {
+		return hangarRepository.existsById(id);
+	}
+	
+	@Override
+	public Boolean existsHangarByName(String name) {
+		return hangarRepository.existsHangarByName(name);
 	}
 
 }
