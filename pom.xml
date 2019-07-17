@@ -9,8 +9,9 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.crud</groupId>
-	<artifactId>SpringRest-CRUD-03</artifactId>
+	<artifactId>inventory-api-rest</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
+	<packaging>pom</packaging>
 	<name>SpringRest-CRUD-03</name>
 	<description>Demo project for Spring Boot</description>
 
@@ -52,4 +53,9 @@
 		</plugins>
 	</build>
 
+	<modules>
+		<module>principal</module>
+		<module>base</module>
+		<module>masterdata</module>
+	</modules>
 </project>
