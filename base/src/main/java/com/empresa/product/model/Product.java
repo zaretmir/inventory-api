@@ -1,14 +1,10 @@
 package com.empresa.product.model;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.ForeignKey;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotEmpty;
 
 import com.empresa.hangar.model.Hangar;
@@ -22,7 +18,7 @@ public class Product {
 	private long id;
 	
 	@Column
-	@NotEmpty(groups = {CreateProduct.class, EditProduct.class})
+	@NotEmpty
 	private String name;
 	
 	@Column
@@ -31,11 +27,6 @@ public class Product {
 	@Column
 	private Integer qty;
 	
-	/*
-	@ManyToOne(cascade=CascadeType.ALL)
-	@JoinColumn(name="hangar_id", foreignKey = @ForeignKey(name="hangar_id_fk"))
-	private Hangar hangar;
-	*/
 	public long getId() {
 		return id;
 	}
@@ -63,18 +54,6 @@ public class Product {
 	public void setQty(Integer qty) {
 		this.qty = qty;
 	}
-	
-	/*
-
-	public Hangar getHangar() {
-		return hangar;
-	}
-
-	public void setHangar(Hangar hangar) {
-		this.hangar = hangar;
-	}
-	
-	*/
 	
 	// CONSTRUCTORS
 

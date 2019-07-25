@@ -2,9 +2,12 @@ package com.empresa;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.validation.annotation.Validated;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -14,8 +17,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.empresa.hangar.service.HangarService;
-import com.empresa.product.model.CreateProduct;
-import com.empresa.product.model.EditProduct;
+import com.empresa.product.builder.ProductBuilder;
+import com.empresa.product.dto.ProductDto;
 import com.empresa.product.model.Product;
 import com.empresa.product.service.ProductService;
 import com.empresa.product_hangar.model.ProductOfHangar;
@@ -24,6 +27,7 @@ import com.empresa.product_hangar.service.Product_HangarService;
 
 @RestController
 @RequestMapping("/api/product")
+@CrossOrigin
 public class ProductController {
 	
 	@Autowired
@@ -37,48 +41,68 @@ public class ProductController {
 	
 	// List all products
 	@GetMapping("/products")
-	public List<Product> listProducts() {
-		return productService.getProducts();
+	public ResponseEntity<List<ProductDto>> listProducts() {
+		
+		List<Product> products = productService.getProducts();
+		
+		List<ProductDto> dtos = products.stream().map(
+				p -> ProductBuilder.convertToDto(p)).collect(Collectors.toList());
+		
+		return new ResponseEntity<List<ProductDto>>( dtos, HttpStatus.OK );
 	}
 	
-	// Get product by id
 	@GetMapping("/product/{id}")
-	public Product getProduct(@PathVariable Long id) {
-		return productService.getProductById(id);
-	
+	public ResponseEntity<ProductDto> getProduct(@PathVariable Long id) {
+		
+		Product product = productService.getProductById(id);
+		
+		return new ResponseEntity<ProductDto>(
+				ProductBuilder.convertToDto(product), HttpStatus.OK);
 	}
+	
 	
 	// New product
 	@PostMapping("/product")
-	public Product createProduct(@Validated(value = CreateProduct.class) @RequestBody Product product) {
-		return productService.createProduct(product);
+	public ResponseEntity<Product> createProduct(@RequestBody ProductDto dto) {
+		
+		Product product = ProductBuilder.convertToEntity(dto);
+		
+		return new ResponseEntity<Product>(
+				productService.createProduct(product), HttpStatus.OK);
 	}
 	
 	// Edit existing product
 	@PutMapping("product/{id}")
-	public Product editProduct(@PathVariable Long id, @Validated(value = EditProduct.class) @RequestBody Product reqProduct) {
-		return productService.editProduct(id, reqProduct);
+	public ResponseEntity<Product> editProduct(@PathVariable Long id, @RequestBody ProductDto dto) {
+		
+		Product product = ProductBuilder.convertToEntity(dto);
+		
+		return new ResponseEntity<Product>(
+				productService.editProduct(id, product), HttpStatus.OK);
 	}
-	
-	/*
-	// Get product by hangar
-	@GetMapping("/byHangarId/{id}")
-	public List<Product> productsByHangar(@PathVariable("id") Long id) {
-		return productService.getByHangar(id);
-	}
-	
-	*/
-	
+		
 	// Get product matching first letter
 	@GetMapping("/products/{letter}")
-	public List<Product> listProductsByFirstLetter(@PathVariable char letter) {
-		return productService.listProductsByFirstLetter(letter);
+	public ResponseEntity<List<ProductDto>> listProductsByFirstLetter(@PathVariable char letter) {
+		
+		List<Product> products = productService.listProductsByFirstLetter(letter);
+		
+		List<ProductDto> dtos = products.stream().map(
+				p -> ProductBuilder.convertToDto(p)).collect(Collectors.toList());
+		
+		return new ResponseEntity<List<ProductDto>>( dtos, HttpStatus.OK );
 	}
 	
 	// Products to uppercase
 	@GetMapping("/products/uppercase")
-	public List<Product> listProductsUpperCase() {
-		return productService.listProductsUpperCase();
+	public ResponseEntity<List<ProductDto>> listProductsUpperCase() {
+		
+		List<Product> products = productService.listProductsUpperCase();
+		
+		List<ProductDto> dtos = products.stream().map(
+				p -> ProductBuilder.convertToDto(p)).collect(Collectors.toList());
+		
+		return new ResponseEntity<List<ProductDto>>( dtos, HttpStatus.OK );
 	}
 	
 	// Get product with longest name
