@@ -5,7 +5,6 @@ import java.util.List;
 import javax.validation.Valid;
 
 import com.empresa.hangar.model.Hangar;
-import com.empresa.product.model.Product;
 //test
 //test2
 public interface HangarService {
@@ -19,6 +18,10 @@ public interface HangarService {
 	Hangar getHangarById(long id);
 
 	Hangar updateHangar(Long id, Hangar update);
+
+	Hangar logicDeleteHangar(Long id);
+
+	List<Hangar> getHangarsStateTrue();
 
 
 }

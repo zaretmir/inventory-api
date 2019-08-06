@@ -1,5 +1,7 @@
 package com.empresa.product_hangar.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,6 +17,11 @@ public class Product_HangarServiceImp implements Product_HangarService{
 	@Override
 	public Product_Hangar save(Product_Hangar relationship) {
 		return product_HangarDAO.save(relationship);
+	}
+	
+	@Override
+	public List<Product_Hangar> getProductsByHangar(Long hangarId) {
+		return product_HangarDAO.getProductsByHangar(hangarId);
 	}
 
 }

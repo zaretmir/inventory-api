@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.empresa.hangar.dao.HangarDAO;
-import com.empresa.hangar.model.Hangar;
 import com.empresa.hangar.repository.HangarRepository;
 import com.empresa.product.model.Product;
 import com.empresa.product.repository.ProductRepository;
@@ -29,8 +28,9 @@ public class ProductDAOImp implements ProductDAO {
 	}
 	
 	@Override
-	public List<Product> getProducts() {
-		return productRepository.findAll();
+	public List<Product> getProductsTrueState() {
+		return productRepository.findByIsStateTrue();
+		//return productRepository.findAll();
 	}
 	
 	@Override
@@ -41,6 +41,12 @@ public class ProductDAOImp implements ProductDAO {
 	@Override
 	public Product save(Product product) {
 		//hangarDAO.addProductToHangar(product);
+		return productRepository.save(product);
+	}
+	
+	@Override
+	public Product delete(Product product) {
+		product.setIsState(false);
 		return productRepository.save(product);
 	}
 	/*

@@ -37,7 +37,7 @@ public class HangarController {
 	@GetMapping("/hangars")
 	public ResponseEntity<List<HangarDto>> list() {
 		
-		List<Hangar> hangars = hangarService.getHangars();
+		List<Hangar> hangars = hangarService.getHangarsStateTrue();
 		List<HangarDto> dtos = hangars.stream().map(
 				hangar -> HangarBuilder.convertToDto(hangar)).collect(Collectors.toList());
 		
@@ -59,15 +59,18 @@ public class HangarController {
 		return new ResponseEntity<Hangar>(hangarService.createHangar(hangar), HttpStatus.OK);
 	}
 	
-	/*
-	 * Edit Hangar name (other properties cannot be edited)
-	 */
+	
 	@PutMapping("/update/{id}")
 	public ResponseEntity<Hangar> updateHangar(@PathVariable("id") Long id, @RequestBody HangarDto dto) {
 		// ?
 		Hangar update = HangarBuilder.convertToEntity(dto);
 		
 		return new ResponseEntity<Hangar>(hangarService.updateHangar(id, update), HttpStatus.OK);	
+	}
+	
+	@PutMapping("/delete/{id}")
+	public ResponseEntity<Hangar> deleteHangar(@PathVariable("id") Long id) {
+		return new ResponseEntity<Hangar>(hangarService.logicDeleteHangar(id), HttpStatus.OK);
 	}
 
 }

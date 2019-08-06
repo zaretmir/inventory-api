@@ -3,44 +3,38 @@ package com.empresa.product_hangar.model;
 import java.io.Serializable;
 import java.util.Objects;
 
-import javax.persistence.Embeddable;
-
 //@Embeddable
 public class Product_Hangar_Id implements Serializable {
 	
-	
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = -6267293444346995566L;
 
-	private Long hangar_pk;
+	private Long hangarpk;
 	
-	private Long product_pk;
+	private Long productpk;
 	
-	public Long getHangar_pk() {
-		return hangar_pk;
+	public Long getHangarPk() {
+		return hangarpk;
 	}
 
 
-	public void setHangar_pk(Long hangar_pk) {
-		this.hangar_pk = hangar_pk;
+	public void setHangarPk(Long hangarpk) {
+		this.hangarpk = hangarpk;
 	}
 
 
-	public Long getProduct_pk() {
-		return product_pk;
+	public Long getProductPk() {
+		return productpk;
 	}
 
 
-	public void setProduct_pk(Long product_pk) {
-		this.product_pk = product_pk;
+	public void setProductpk(Long productpk) {
+		this.productpk = productpk;
 	}
 
 
-	public Product_Hangar_Id(Long hangar_pk, Long product_pk) {
-		this.hangar_pk = hangar_pk;
-		this.product_pk = product_pk;
+	public Product_Hangar_Id(Long hangarpk, Long productpk) {
+		this.hangarpk = hangarpk;
+		this.productpk = productpk;
 	}	
 	
 	public Product_Hangar_Id() {
@@ -57,13 +51,13 @@ public class Product_Hangar_Id implements Serializable {
 		
 		Product_Hangar product_hangar = (Product_Hangar) o;
 		
-		return (product_hangar.getHangar_pk() == this.hangar_pk && product_hangar.getProduct_pk() == this.product_pk);
+		return (product_hangar.getHangarpk() == this.hangarpk && product_hangar.getProductpk() == this.productpk);
 		
 	}
 	
 	@Override
 	public int hashCode() {
-		return Objects.hash(getProduct_pk(), getHangar_pk());
+		return Objects.hash(getProductPk(), getHangarPk());
 	}
 
 }

@@ -22,4 +22,6 @@ public interface ProductService {
 	//List<Product> getByHangar(Long id);
 
 	Product createProduct(Product product);
+
+	Product deleteProduct(Long id);
 }

@@ -9,6 +9,7 @@ public class ProductBuilder {
 		Product product = new Product();
 		product.setName(dto.getName());
 		product.setDescription(dto.getDescription());
+		product.setIsState(dto.getIsState());
 		return product;
 	}
 	
@@ -17,6 +18,7 @@ public class ProductBuilder {
 		dto.setId(product.getId());
 		dto.setName(product.getName());
 		dto.setDescription(product.getDescription());
+		dto.setIsState(product.getIsState());
 		return dto;
 	}
 

@@ -1,5 +1,6 @@
 package com.empresa.hangar.repository;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -10,5 +11,6 @@ public interface HangarRepository extends JpaRepository<Hangar, Long> {
 	
 	Optional<Hangar> findById(long id);
 	boolean existsHangarByName(String name);
+	List<Hangar> findByIsStateTrue();
 
 }

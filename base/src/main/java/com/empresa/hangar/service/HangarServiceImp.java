@@ -9,7 +9,6 @@ import org.springframework.web.server.ResponseStatusException;
 
 import com.empresa.hangar.dao.HangarDAO;
 import com.empresa.hangar.model.Hangar;
-import com.empresa.product.model.Product;
 
 @Service
 public class HangarServiceImp implements HangarService {
@@ -33,6 +32,15 @@ public class HangarServiceImp implements HangarService {
 	@Override
 	public List<Hangar> getHangars() {
 		List<Hangar> hangars = hangarDAO.getHangars();
+		
+		checkIfEmpty(hangars);
+		
+		return hangars;
+	}
+	
+	@Override
+	public List<Hangar> getHangarsStateTrue() {
+		List<Hangar> hangars = hangarDAO.getHangarsStateTrue();
 		
 		checkIfEmpty(hangars);
 		
@@ -81,8 +89,20 @@ public class HangarServiceImp implements HangarService {
 		
 		Hangar original = hangarDAO.getHangarById(id);
 		original.setName(update.getName());
+		original.setAddress(update.getAddress());
+		original.setOwner(update.getOwner());
+		original.setOwnerEmail(update.getOwnerEmail());
+		original.setPhoneNumber(update.getPhoneNumber());
 		
 		return hangarDAO.save(original);
+	}
+
+	@Override
+	public Hangar logicDeleteHangar(Long id) {
+		Hangar hangar = hangarDAO.getHangarById(id);
+		hangar.setIsState(false);
+		
+		return hangarDAO.save(hangar);
 	}
 	
 

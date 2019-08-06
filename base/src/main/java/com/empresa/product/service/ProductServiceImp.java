@@ -15,7 +15,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
-import com.empresa.hangar.model.Hangar;
 import com.empresa.hangar.service.HangarService;
 import com.empresa.product.dao.ProductDAO;
 import com.empresa.product.model.Product;
@@ -63,7 +62,7 @@ public class ProductServiceImp implements ProductService {
 	@Override
 	public List<Product> getProducts() {
 		
-		return productDAO.getProducts();
+		return productDAO.getProductsTrueState();
 		
 	}
 	
@@ -90,7 +89,7 @@ public class ProductServiceImp implements ProductService {
 			Product original = productDAO.getProductById(id);
 			
 			String[] nullPropertyNames = getNullPropertyNames(update);
-			BeanUtils.copyProperties(original, update, nullPropertyNames);
+			BeanUtils.copyProperties(update, original, nullPropertyNames);
 			//https://stackoverflow.com/questions/45904389/spring-boot-how-to-edit-entity.
 			
 			return productDAO.save(original);
@@ -101,7 +100,7 @@ public class ProductServiceImp implements ProductService {
 	@Override
 	public List<Product> listProductsByFirstLetter(char letter) {
 		// ¿Se podría hacer con el repo?
-		List<Product> allProducts = productDAO.getProducts();
+		List<Product> allProducts = productDAO.getProductsTrueState();
 		
 		List<Product> matches = allProducts.stream().filter( p -> p.getName().charAt(0) == letter ).collect(Collectors.toList());
 		
@@ -111,7 +110,7 @@ public class ProductServiceImp implements ProductService {
 	@Override
 	public List<Product> listProductsUpperCase() {
 		
-		List<Product> lower = productDAO.getProducts();
+		List<Product> lower = productDAO.getProductsTrueState();
 		
 		List<Product> upper = lower.stream().map( p -> {
 			p.setName(p.getName().toUpperCase());
@@ -123,9 +122,15 @@ public class ProductServiceImp implements ProductService {
 	
 	@Override
 	public Optional<Product> listProductsLongestName() {
-		List<Product> allProducts = productDAO.getProducts();
+		List<Product> allProducts = productDAO.getProductsTrueState();
 		Optional<Product> longest = allProducts.stream().max(Comparator.comparingInt( a -> a.getName().length() ));
 		return longest;
+	}
+
+	@Override
+	public Product deleteProduct(Long id) {
+		Product product = productDAO.getProductById(id);
+		return productDAO.delete(product);
 	}
 	
 	/*

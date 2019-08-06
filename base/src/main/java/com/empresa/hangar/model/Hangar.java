@@ -15,10 +15,80 @@ public class Hangar {
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	@Column(name="hangar_id")
 	private long id;
+	
 	@Column
 	private String name;
+	
 	@Column
 	private String address;
+	
+	@Column
+	private String owner;
+	
+	@Column
+	private String ownerEmail;
+	
+	@Column
+	private Integer phoneNumber;
+	
+	@Column
+	private boolean isState;
+
+	public long getId() {
+		return id;
+	}
+
+	public void setId(long id) {
+		this.id = id;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public String getAddress() {
+		return address;
+	}
+
+	public void setAddress(String address) {
+		this.address = address;
+	}
+
+	public String getOwner() {
+		return owner;
+	}
+
+	public void setOwner(String owner) {
+		this.owner = owner;
+	}
+
+	public String getOwnerEmail() {
+		return ownerEmail;
+	}
+
+	public void setOwnerEmail(String ownerEmail) {
+		this.ownerEmail = ownerEmail;
+	}
+
+	public Integer getPhoneNumber() {
+		return phoneNumber;
+	}
+
+	public void setPhoneNumber(Integer phoneNumber) {
+		this.phoneNumber = phoneNumber;
+	}
+
+	public boolean getIsState() {
+		return isState;
+	}
+
+	public void setIsState(boolean isState) {
+		this.isState = isState;
+	}
 	
 	/*
 	//@OneToMany(cascade = CascadeType.ALL, mappedBy = "hangar")
@@ -37,33 +107,6 @@ public class Hangar {
 		products.add(product);
 		product.setHangar(this);
 	}*/
-
-	public Hangar() { }
-	
-	public Hangar(String name, String address) {
-		this.name = name;
-		this.address = address;
-	}
-	
-	public long getId() {
-		return id;
-	}
-	public String getName() {
-		return name;
-	}
-	public String getAddress() {
-		return address;
-	}
-	public void setId(long id) {
-		this.id = id;
-	}
-	public void setName(String name) {
-		this.name = name;
-	}
-	public void setAddress(String address) {
-		this.address = address;
-	}
-	
 	
 	
 

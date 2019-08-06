@@ -7,7 +7,6 @@ import org.springframework.stereotype.Component;
 
 import com.empresa.hangar.model.Hangar;
 import com.empresa.hangar.repository.HangarRepository;
-import com.empresa.product.model.Product;
 
 @Component
 public class HangarDAOImp implements HangarDAO {
@@ -18,6 +17,11 @@ public class HangarDAOImp implements HangarDAO {
 	@Override
 	public List<Hangar> getHangars() {
 		return hangarRepository.findAll();
+	}
+	
+	@Override
+	public List<Hangar> getHangarsStateTrue() {
+		return hangarRepository.findByIsStateTrue();
 	}
 	
 	@Override

@@ -25,7 +25,9 @@ public class Product {
 	private String description;
 	
 	@Column
-	private Integer qty;
+	private boolean isState;
+	
+	//<3
 	
 	public long getId() {
 		return id;
@@ -46,13 +48,13 @@ public class Product {
 	public void setDescription(String description) {
 		this.description = description;
 	}
-
-	public Integer getQty() {
-		return qty;
+	
+	public boolean getIsState() {
+		return isState;
 	}
-
-	public void setQty(Integer qty) {
-		this.qty = qty;
+	
+	public void setIsState(boolean state) {
+		this.isState = state;
 	}
 	
 	// CONSTRUCTORS
@@ -63,18 +65,16 @@ public class Product {
 		this.name = name;
 	}
 	
-	public Product(Long id, String name, String description, int qty, Hangar hangar) {
+	public Product(Long id, String name, String description, Hangar hangar) {
 		this.id = id;
 		this.name = name;
 		this.description = description;
-		this.qty = qty;
 		// this.hangar = hangar;
 	}
 	
-	public Product(String name, String description, int qty, Hangar hangar) {
+	public Product(String name, String description, Hangar hangar) {
 		this.name = name;
 		this.description = description;
-		this.qty = qty;
 		// this.hangar = hangar;
 	}
 

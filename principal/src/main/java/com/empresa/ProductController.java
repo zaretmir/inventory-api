@@ -21,8 +21,6 @@ import com.empresa.product.builder.ProductBuilder;
 import com.empresa.product.dto.ProductDto;
 import com.empresa.product.model.Product;
 import com.empresa.product.service.ProductService;
-import com.empresa.product_hangar.model.ProductOfHangar;
-import com.empresa.product_hangar.model.Product_Hangar;
 import com.empresa.product_hangar.service.Product_HangarService;
 
 @RestController
@@ -72,13 +70,21 @@ public class ProductController {
 	}
 	
 	// Edit existing product
-	@PutMapping("product/{id}")
+	@PutMapping("/product/{id}")
 	public ResponseEntity<Product> editProduct(@PathVariable Long id, @RequestBody ProductDto dto) {
 		
 		Product product = ProductBuilder.convertToEntity(dto);
 		
 		return new ResponseEntity<Product>(
 				productService.editProduct(id, product), HttpStatus.OK);
+	}
+	
+	@PutMapping("/delete/{id}")
+	public ResponseEntity<ProductDto> deleteProduct(@PathVariable("id") Long id) {
+		ProductDto dto = ProductBuilder.convertToDto(productService.deleteProduct(id));
+		return new ResponseEntity<ProductDto>(
+				dto, HttpStatus.OK);
+		
 	}
 		
 	// Get product matching first letter
@@ -109,17 +115,5 @@ public class ProductController {
 	@GetMapping("/products/longest")
 	public Optional<Product> listProductsLongestName() {
 		return productService.listProductsLongestName();
-	}
-	
-	// a ctrl p_h
-	@PostMapping(value="/productOfHangar", produces="application/json; charset=UTF-8")
-	public Product_Hangar mapProductToHangar(@RequestBody ProductOfHangar productOfHangar) {
-		
-		Product_Hangar relationship = new Product_Hangar();
-		relationship.setHangar_pk(productOfHangar.getHangar_pk());
-		relationship.setProduct_pk(productOfHangar.getProduct_pk());
-		relationship.setQtyph(productOfHangar.getQtyph());
-		
-		return product_hangarService.save(relationship);
 	}
 }
