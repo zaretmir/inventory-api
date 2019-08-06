@@ -5,6 +5,10 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -20,6 +24,7 @@ import com.empresa.hangar.service.HangarService;
 import com.empresa.product.builder.ProductBuilder;
 import com.empresa.product.dto.ProductDto;
 import com.empresa.product.model.Product;
+import com.empresa.product.repository.ProductRepository;
 import com.empresa.product.service.ProductService;
 import com.empresa.product_hangar.service.Product_HangarService;
 
@@ -37,8 +42,11 @@ public class ProductController {
 	@Autowired
 	HangarService hangarService;
 	
+	@Autowired
+	ProductRepository productRepository;
+	
 	// List all products
-	@GetMapping("/products")
+	@GetMapping("/products-all")
 	public ResponseEntity<List<ProductDto>> listProducts() {
 		
 		List<Product> products = productService.getProducts();
@@ -47,6 +55,22 @@ public class ProductController {
 				p -> ProductBuilder.convertToDto(p)).collect(Collectors.toList());
 		
 		return new ResponseEntity<List<ProductDto>>( dtos, HttpStatus.OK );
+	}
+	
+	@GetMapping("/products/{page}/{items}")
+	public ResponseEntity<Page<ProductDto>> productsPage(@PathVariable("page") int page, @PathVariable("items") int items) {
+		
+		Pageable pageRequest = PageRequest.of(page, items);
+		
+		Page<Product> products = productRepository.findByIsStateTrue(pageRequest);
+		
+		Page<ProductDto> dtos = new PageImpl<ProductDto>(
+				products.stream()
+					.map(p -> ProductBuilder.convertToDto(p)).collect(Collectors.toList()),
+					pageRequest,
+					products.getTotalElements());						
+		
+		return new ResponseEntity<Page<ProductDto>>( dtos, HttpStatus.OK );
 	}
 	
 	@GetMapping("/product/{id}")

@@ -6,6 +6,10 @@ import java.util.stream.Collectors;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -34,7 +38,7 @@ public class HangarController {
 	@Autowired
 	HangarService hangarService;
 	
-	@GetMapping("/hangars")
+	@GetMapping("/hangars-all")
 	public ResponseEntity<List<HangarDto>> list() {
 		
 		List<Hangar> hangars = hangarService.getHangarsStateTrue();
@@ -42,6 +46,23 @@ public class HangarController {
 				hangar -> HangarBuilder.convertToDto(hangar)).collect(Collectors.toList());
 		
 		return new ResponseEntity<List<HangarDto>>( dtos, HttpStatus.OK);
+	}
+	
+	// Pagination testing
+	@GetMapping("/hangars/{page}/{items}")
+	public ResponseEntity<Page<HangarDto>> listPag(@PathVariable("page") int page, @PathVariable("items") int items) {
+		
+		Pageable pageRequest = PageRequest.of(page, items);
+		
+		Page<Hangar> hangars = hangarRepository.findByIsStateTrue(pageRequest);
+		
+		Page<HangarDto> dtos = new PageImpl<HangarDto>(
+				hangars.getContent().stream()
+					.map(hangar -> HangarBuilder.convertToDto(hangar)).collect(Collectors.toList()),
+				pageRequest,
+				hangars.getTotalElements());
+		
+		return new ResponseEntity<Page<HangarDto>>( dtos, HttpStatus.OK);
 	}
 	
 	@GetMapping("/hangar/{id}")
