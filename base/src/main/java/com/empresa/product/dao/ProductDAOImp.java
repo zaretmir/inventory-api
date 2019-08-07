@@ -3,6 +3,8 @@ package com.empresa.product.dao;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
 
 import com.empresa.hangar.dao.HangarDAO;
@@ -57,5 +59,10 @@ public class ProductDAOImp implements ProductDAO {
 		return productRepository.findByHangar(hangar);
 	}
 	*/
+
+	@Override
+	public Page<Product> getActiveProductsPage(Pageable pageRequest) {
+		return productRepository.findByIsStateTrue(pageRequest);
+	}
 
 }

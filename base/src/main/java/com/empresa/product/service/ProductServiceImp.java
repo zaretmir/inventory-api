@@ -11,6 +11,8 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.BeanWrapper;
 import org.springframework.beans.BeanWrapperImpl;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
@@ -131,6 +133,11 @@ public class ProductServiceImp implements ProductService {
 	public Product deleteProduct(Long id) {
 		Product product = productDAO.getProductById(id);
 		return productDAO.delete(product);
+	}
+
+	@Override
+	public Page<Product> getActiveProductsPage(Pageable pageRequest) {
+		return productDAO.getActiveProductsPage(pageRequest);
 	}
 	
 	/*

@@ -54,7 +54,9 @@ public class HangarController {
 		
 		Pageable pageRequest = PageRequest.of(page, items);
 		
-		Page<Hangar> hangars = hangarRepository.findByIsStateTrue(pageRequest);
+		Page<Hangar> hangars = hangarService.getActiveHangarsPage(pageRequest);
+		
+		//Page<Hangar> hangars = hangarRepository.findByIsStateTrue(pageRequest);
 		
 		Page<HangarDto> dtos = new PageImpl<HangarDto>(
 				hangars.getContent().stream()

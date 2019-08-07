@@ -3,6 +3,8 @@ package com.empresa.hangar.service;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
@@ -103,6 +105,11 @@ public class HangarServiceImp implements HangarService {
 		hangar.setIsState(false);
 		
 		return hangarDAO.save(hangar);
+	}
+
+	@Override
+	public Page<Hangar> getActiveHangarsPage(Pageable pageRequest) {
+		return hangarDAO.getActiveHangarsPage(pageRequest);
 	}
 	
 

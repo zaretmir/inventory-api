@@ -57,12 +57,14 @@ public class ProductController {
 		return new ResponseEntity<List<ProductDto>>( dtos, HttpStatus.OK );
 	}
 	
+	
 	@GetMapping("/products/{page}/{items}")
 	public ResponseEntity<Page<ProductDto>> productsPage(@PathVariable("page") int page, @PathVariable("items") int items) {
 		
 		Pageable pageRequest = PageRequest.of(page, items);
 		
-		Page<Product> products = productRepository.findByIsStateTrue(pageRequest);
+		Page<Product> products = productService.getActiveProductsPage(pageRequest);
+		//productRepository.findByIsStateTrue(pageRequest);
 		
 		Page<ProductDto> dtos = new PageImpl<ProductDto>(
 				products.stream()
@@ -72,6 +74,7 @@ public class ProductController {
 		
 		return new ResponseEntity<Page<ProductDto>>( dtos, HttpStatus.OK );
 	}
+	
 	
 	@GetMapping("/product/{id}")
 	public ResponseEntity<ProductDto> getProduct(@PathVariable Long id) {

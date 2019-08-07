@@ -3,6 +3,8 @@ package com.empresa.hangar.dao;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
 
 import com.empresa.hangar.model.Hangar;
@@ -54,6 +56,11 @@ public class HangarDAOImp implements HangarDAO {
 	@Override
 	public Boolean existsHangarByName(String name) {
 		return hangarRepository.existsHangarByName(name);
+	}
+
+	@Override
+	public Page<Hangar> getActiveHangarsPage(Pageable pageRequest) {
+		return hangarRepository.findByIsStateTrue(pageRequest);
 	}
 
 }

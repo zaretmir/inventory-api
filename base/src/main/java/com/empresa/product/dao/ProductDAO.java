@@ -2,6 +2,9 @@ package com.empresa.product.dao;
 
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+
 import com.empresa.product.model.Product;
 
 public interface ProductDAO {
@@ -15,6 +18,8 @@ public interface ProductDAO {
 	Product save(Product product);
 
 	Product delete(Product product);
+
+	Page<Product> getActiveProductsPage(Pageable pageRequest);
 
 	//List<Product> findByHangar(Long id);
 
