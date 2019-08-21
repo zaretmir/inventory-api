@@ -42,20 +42,14 @@
 			<groupId>com.fasterxml.jackson.core</groupId>
 			<artifactId>jackson-databind</artifactId>
 		</dependency>
+		  	<!-- de jwt security -->
+  	
 	</dependencies>
 
-	<build>
-		<plugins>
-			<plugin>
-				<groupId>org.springframework.boot</groupId>
-				<artifactId>spring-boot-maven-plugin</artifactId>
-			</plugin>
-		</plugins>
-	</build>
-
-	<modules>
+	<modules>		
 		<module>principal</module>
+		<module>jwt-security</module>
 		<module>base</module>
-		<module>masterdata</module>
+		<module>masterdata</module>		
 	</modules>
 </project>
