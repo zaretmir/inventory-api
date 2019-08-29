@@ -78,6 +78,5 @@ public class JwtUserDetailsService implements UserDetailsService {
 		return savedUser;
 	}
 	
-	
 
 }

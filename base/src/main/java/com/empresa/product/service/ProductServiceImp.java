@@ -20,6 +20,7 @@ import org.springframework.web.server.ResponseStatusException;
 import com.empresa.hangar.service.HangarService;
 import com.empresa.product.dao.ProductDAO;
 import com.empresa.product.model.Product;
+import com.empresa.product.projection.ProductSimplified;
 
 @Service
 public class ProductServiceImp implements ProductService {
@@ -147,5 +148,9 @@ public class ProductServiceImp implements ProductService {
 		return products;
 	}
 	*/
-
+	
+	@Override
+	public ProductSimplified getSimplifiedProductById(Long id) {
+		return productDAO.getSimplifiedProduct(id);
+	}
 }

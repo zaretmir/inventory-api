@@ -24,6 +24,7 @@ import com.empresa.hangar.service.HangarService;
 import com.empresa.product.builder.ProductBuilder;
 import com.empresa.product.dto.ProductDto;
 import com.empresa.product.model.Product;
+import com.empresa.product.projection.ProductSimplified;
 import com.empresa.product.repository.ProductRepository;
 import com.empresa.product.service.ProductService;
 import com.empresa.product_hangar.service.Product_HangarService;
@@ -85,6 +86,10 @@ public class ProductController {
 				ProductBuilder.convertToDto(product), HttpStatus.OK);
 	}
 	
+	@GetMapping("product/simplified/{id}")
+	public ResponseEntity<Object> getSimplifiedProduct(@PathVariable Long id) {
+		return new ResponseEntity<Object>(productService.getSimplifiedProductById(id), HttpStatus.OK);
+	}	
 	
 	// New product
 	@PostMapping("/product")

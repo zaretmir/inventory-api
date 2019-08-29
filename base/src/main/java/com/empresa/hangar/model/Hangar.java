@@ -8,7 +8,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="HANGAR")
+@Table(name="HANGAR", schema="db_inventory")
 public class Hangar {
 	
 	@Id

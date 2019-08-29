@@ -14,7 +14,7 @@ import javax.validation.constraints.NotNull;
 import com.empresa.product.model.Product;
 
 @Entity
-@Table(name="price")
+@Table(name="price", schema="db_inventory")
 public class Price {
 	
 	@Id

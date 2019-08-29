@@ -6,6 +6,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 import com.empresa.product.model.Product;
+import com.empresa.product.projection.ProductSimplified;
 
 public interface ProductDAO {
 	
@@ -20,6 +21,8 @@ public interface ProductDAO {
 	Product delete(Product product);
 
 	Page<Product> getActiveProductsPage(Pageable pageRequest);
+
+	ProductSimplified getSimplifiedProduct(Long id);
 
 	//List<Product> findByHangar(Long id);
 

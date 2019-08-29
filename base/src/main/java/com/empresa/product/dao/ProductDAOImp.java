@@ -10,6 +10,7 @@ import org.springframework.stereotype.Component;
 import com.empresa.hangar.dao.HangarDAO;
 import com.empresa.hangar.repository.HangarRepository;
 import com.empresa.product.model.Product;
+import com.empresa.product.projection.ProductSimplified;
 import com.empresa.product.repository.ProductRepository;
 
 @Component
@@ -64,5 +65,13 @@ public class ProductDAOImp implements ProductDAO {
 	public Page<Product> getActiveProductsPage(Pageable pageRequest) {
 		return productRepository.findByIsStateTrue(pageRequest);
 	}
+	
+	@Override
+	public ProductSimplified getSimplifiedProduct(Long id) {
+		ProductSimplified simpl = productRepository.findProductByIdProjectedForLimitedData(id);
+		return simpl;
+	}
+	
+	
 
 }

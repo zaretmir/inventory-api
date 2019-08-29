@@ -3,6 +3,8 @@ package com.empresa.product_hangar.model;
 import java.io.Serializable;
 import java.util.Objects;
 
+import javax.persistence.Table;
+
 //@Embeddable
 public class Product_Hangar_Id implements Serializable {
 	

@@ -12,7 +12,6 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -27,9 +26,7 @@ import com.empresa.hangar.dto.HangarDto;
 import com.empresa.hangar.model.Hangar;
 import com.empresa.hangar.repository.HangarRepository;
 import com.empresa.hangar.service.HangarService;
-import com.security.config.JwtTokenUtil;
-import com.security.repository.UserRepository;
-import com.security.service.JwtUserDetailsService;
+import com.empresa.product_hangar.service.Product_HangarService;
 
 @RestController
 @RequestMapping("/api/hangar")
@@ -41,6 +38,9 @@ public class HangarController {
 	
 	@Autowired
 	HangarService hangarService;
+	
+	@Autowired
+	Product_HangarService product_HangarService;
 	
 	
 	@GetMapping("/hangars-all")

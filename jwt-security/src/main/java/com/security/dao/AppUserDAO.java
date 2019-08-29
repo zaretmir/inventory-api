@@ -7,5 +7,7 @@ public interface AppUserDAO {
 	AppUser findByUsername(String username);
 	
 	AppUser save(AppUser user);
+	
+	Boolean existsByUsername(String username);
 
 }

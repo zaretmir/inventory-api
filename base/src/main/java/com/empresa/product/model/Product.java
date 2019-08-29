@@ -5,11 +5,13 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Table;
 import javax.validation.constraints.NotEmpty;
 
 import com.empresa.hangar.model.Hangar;
 
 @Entity
+@Table(name="product", schema="db_inventory")
 public class Product {
 	
 	@Id

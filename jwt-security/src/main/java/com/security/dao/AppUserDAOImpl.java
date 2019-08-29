@@ -22,4 +22,9 @@ public class AppUserDAOImpl implements AppUserDAO {
 		return userRepo.save(user);
 	}
 
+	@Override
+	public Boolean existsByUsername(String username) {
+		return userRepo.existsByUsername(username);
+	}
+
 }
