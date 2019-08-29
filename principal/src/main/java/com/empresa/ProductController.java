@@ -1,5 +1,6 @@
 package com.empresa;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -18,16 +19,13 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.empresa.hangar.service.HangarService;
 import com.empresa.product.builder.ProductBuilder;
 import com.empresa.product.dto.ProductDto;
 import com.empresa.product.model.Product;
-import com.empresa.product.projection.ProductSimplified;
-import com.empresa.product.repository.ProductRepository;
 import com.empresa.product.service.ProductService;
-import com.empresa.product_hangar.service.Product_HangarService;
 
 @RestController
 @RequestMapping("/api/product")
@@ -37,25 +35,21 @@ public class ProductController {
 	@Autowired
 	ProductService productService;
 	
-	@Autowired
-	Product_HangarService product_hangarService;
 	
-	@Autowired
-	HangarService hangarService;
-	
-	@Autowired
-	ProductRepository productRepository;
-	
-	// List all products
-	@GetMapping("/products-all")
-	public ResponseEntity<List<ProductDto>> listProducts() {
+	@GetMapping("/products")
+	public ResponseEntity<List<ProductDto>> getSearchResults(@RequestParam(required = false) String name) {
+		List<Product> results = new ArrayList<Product>();
 		
-		List<Product> products = productService.getProducts();
-		
-		List<ProductDto> dtos = products.stream().map(
-				p -> ProductBuilder.convertToDto(p)).collect(Collectors.toList());
-		
-		return new ResponseEntity<List<ProductDto>>( dtos, HttpStatus.OK );
+		if (name != null) {
+			results = productService.getProductsMatchingSearch(name);
+		} else {
+			results = productService.getProducts();
+		}
+		 
+		List<ProductDto> response = results.stream()
+				.map(product -> ProductBuilder.convertToDto(product))
+				.collect(Collectors.toList());
+		return new ResponseEntity<List<ProductDto>>(response, HttpStatus.OK);
 	}
 	
 	
@@ -148,4 +142,6 @@ public class ProductController {
 	public Optional<Product> listProductsLongestName() {
 		return productService.listProductsLongestName();
 	}
+	
+	
 }

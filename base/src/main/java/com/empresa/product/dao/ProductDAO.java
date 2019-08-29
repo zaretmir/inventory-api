@@ -24,6 +24,8 @@ public interface ProductDAO {
 
 	ProductSimplified getSimplifiedProduct(Long id);
 
+	List<Product> getProductsMatchingSearch(String search);
+
 	//List<Product> findByHangar(Long id);
 
 }

@@ -71,6 +71,11 @@ public class ProductDAOImp implements ProductDAO {
 		ProductSimplified simpl = productRepository.findProductByIdProjectedForLimitedData(id);
 		return simpl;
 	}
+
+	@Override
+	public List<Product> getProductsMatchingSearch(String search) {
+		return productRepository.findByIsStateTrueAndNameContaining(search);
+	}
 	
 	
 

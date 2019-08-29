@@ -28,5 +28,7 @@ public interface HangarService {
 
 	Page<Hangar> getActiveHangarsPage(Pageable pageRequest);
 
+	List<Hangar> getProductsMatchingSearch(String term);
+
 
 }

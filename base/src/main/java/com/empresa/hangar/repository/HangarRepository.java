@@ -15,5 +15,6 @@ public interface HangarRepository extends JpaRepository<Hangar, Long> {
 	boolean existsHangarByName(String name);
 	List<Hangar> findByIsStateTrue();
 	Page<Hangar> findByIsStateTrue(Pageable pageable); // Revisar import
+	List<Hangar> findByNameContaining(String search);
 
 }

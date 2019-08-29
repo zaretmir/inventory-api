@@ -26,6 +26,8 @@ public interface ProductRepository extends CrudRepository<Product, Long>{
 	@Query(value = "SELECT p.product_id, p.name FROM product p WHERE p.product_id = :id", nativeQuery = true)
 	ProductSimplified findProductByIdProjectedForLimitedData(Long id);
 	
+	List<Product> findByIsStateTrueAndNameContaining(String searchText);
+	
 	// https://stackoverflow.com/questions/40194614/spring-data-jpa-projection-selected-fields-from-the-db
 	// https://www.baeldung.com/spring-data-rest-projections-excerpts
 	// https://www.bluemagma.be/2018/10/content-negotiation-with-spring-data-jpa-projections

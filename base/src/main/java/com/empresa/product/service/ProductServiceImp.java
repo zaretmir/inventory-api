@@ -153,4 +153,9 @@ public class ProductServiceImp implements ProductService {
 	public ProductSimplified getSimplifiedProductById(Long id) {
 		return productDAO.getSimplifiedProduct(id);
 	}
+	
+	@Override
+	public List<Product> getProductsMatchingSearch(String search) {
+		return productDAO.getProductsMatchingSearch(search);
+	}
 }

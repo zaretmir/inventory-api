@@ -63,4 +63,9 @@ public class HangarDAOImp implements HangarDAO {
 		return hangarRepository.findByIsStateTrue(pageRequest);
 	}
 
+	@Override
+	public List<Hangar> getProductsMatchingSearch(String search) {
+		return hangarRepository.findByNameContaining(search);
+	}
+
 }

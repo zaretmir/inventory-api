@@ -27,4 +27,6 @@ public interface HangarDAO {
 
 	Page<Hangar> getActiveHangarsPage(Pageable pageRequest);
 
+	List<Hangar> getProductsMatchingSearch(String search);
+
 }

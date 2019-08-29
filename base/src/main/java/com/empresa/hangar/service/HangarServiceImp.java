@@ -11,6 +11,7 @@ import org.springframework.web.server.ResponseStatusException;
 
 import com.empresa.hangar.dao.HangarDAO;
 import com.empresa.hangar.model.Hangar;
+import com.empresa.product.model.Product;
 
 @Service
 public class HangarServiceImp implements HangarService {
@@ -110,6 +111,11 @@ public class HangarServiceImp implements HangarService {
 	@Override
 	public Page<Hangar> getActiveHangarsPage(Pageable pageRequest) {
 		return hangarDAO.getActiveHangarsPage(pageRequest);
+	}
+
+	@Override
+	public List<Hangar> getProductsMatchingSearch(String search) {
+		return hangarDAO.getProductsMatchingSearch(search);
 	}
 	
 
