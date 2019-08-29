@@ -28,7 +28,7 @@ import com.empresa.product.model.Product;
 import com.empresa.product.service.ProductService;
 
 @RestController
-@RequestMapping("/api/product")
+@RequestMapping("/api/product-management")
 @CrossOrigin
 public class ProductController {
 	
@@ -53,13 +53,20 @@ public class ProductController {
 	}
 	
 	
+	@GetMapping("/products/{id}")
+	public ResponseEntity<ProductDto> getProduct(@PathVariable Long id) {
+		Product product = productService.getProductById(id);
+		return new ResponseEntity<ProductDto>(
+					ProductBuilder.convertToDto(product), HttpStatus.OK);		
+	}
+	
+	
 	@GetMapping("/products/{page}/{items}")
 	public ResponseEntity<Page<ProductDto>> productsPage(@PathVariable("page") int page, @PathVariable("items") int items) {
 		
 		Pageable pageRequest = PageRequest.of(page, items);
 		
 		Page<Product> products = productService.getActiveProductsPage(pageRequest);
-		//productRepository.findByIsStateTrue(pageRequest);
 		
 		Page<ProductDto> dtos = new PageImpl<ProductDto>(
 				products.stream()
@@ -70,23 +77,8 @@ public class ProductController {
 		return new ResponseEntity<Page<ProductDto>>( dtos, HttpStatus.OK );
 	}
 	
-	
-	@GetMapping("/product/{id}")
-	public ResponseEntity<ProductDto> getProduct(@PathVariable Long id) {
-		
-		Product product = productService.getProductById(id);
-		
-		return new ResponseEntity<ProductDto>(
-				ProductBuilder.convertToDto(product), HttpStatus.OK);
-	}
-	
-	@GetMapping("product/simplified/{id}")
-	public ResponseEntity<Object> getSimplifiedProduct(@PathVariable Long id) {
-		return new ResponseEntity<Object>(productService.getSimplifiedProductById(id), HttpStatus.OK);
-	}	
-	
-	// New product
-	@PostMapping("/product")
+
+	@PostMapping("/products")
 	public ResponseEntity<Product> createProduct(@RequestBody ProductDto dto) {
 		
 		Product product = ProductBuilder.convertToEntity(dto);
@@ -95,8 +87,8 @@ public class ProductController {
 				productService.createProduct(product), HttpStatus.OK);
 	}
 	
-	// Edit existing product
-	@PutMapping("/product/{id}")
+	
+	@PutMapping("/products/{id}")
 	public ResponseEntity<Product> editProduct(@PathVariable Long id, @RequestBody ProductDto dto) {
 		
 		Product product = ProductBuilder.convertToEntity(dto);
@@ -105,17 +97,17 @@ public class ProductController {
 				productService.editProduct(id, product), HttpStatus.OK);
 	}
 	
+	
 	@PutMapping("/delete/{id}")
 	public ResponseEntity<ProductDto> deleteProduct(@PathVariable("id") Long id) {
 		ProductDto dto = ProductBuilder.convertToDto(productService.deleteProduct(id));
 		return new ResponseEntity<ProductDto>(
 				dto, HttpStatus.OK);
-		
 	}
 		
-	// Get product matching first letter
-	@GetMapping("/products/{letter}")
-	public ResponseEntity<List<ProductDto>> listProductsByFirstLetter(@PathVariable char letter) {
+
+	@GetMapping("/products/order-by-letter/{letter}")
+	public ResponseEntity<List<ProductDto>> listProductsByFirstLetter(@PathVariable("letter") char letter) {
 		
 		List<Product> products = productService.listProductsByFirstLetter(letter);
 		
@@ -124,6 +116,7 @@ public class ProductController {
 		
 		return new ResponseEntity<List<ProductDto>>( dtos, HttpStatus.OK );
 	}
+	
 	
 	// Products to uppercase
 	@GetMapping("/products/uppercase")

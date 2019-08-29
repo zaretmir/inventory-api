@@ -22,9 +22,9 @@ public interface ProductDAO {
 
 	Page<Product> getActiveProductsPage(Pageable pageRequest);
 
-	ProductSimplified getSimplifiedProduct(Long id);
-
 	List<Product> getProductsMatchingSearch(String search);
+
+	ProductSimplified getSimplifiedProductById(Long id);
 
 	//List<Product> findByHangar(Long id);
 

@@ -56,7 +56,7 @@ public class ProductDAOImp implements ProductDAO {
 
 	@Override
 	public List<Product> findByHangar(Long id) {
-		Hangar hangar = hangarRepository.findById(id).get();
+		Hangar hangar = hangarsRepository.findById(id).get();
 		return productRepository.findByHangar(hangar);
 	}
 	*/
@@ -65,16 +65,15 @@ public class ProductDAOImp implements ProductDAO {
 	public Page<Product> getActiveProductsPage(Pageable pageRequest) {
 		return productRepository.findByIsStateTrue(pageRequest);
 	}
-	
-	@Override
-	public ProductSimplified getSimplifiedProduct(Long id) {
-		ProductSimplified simpl = productRepository.findProductByIdProjectedForLimitedData(id);
-		return simpl;
-	}
 
 	@Override
 	public List<Product> getProductsMatchingSearch(String search) {
 		return productRepository.findByIsStateTrueAndNameContaining(search);
+	}
+
+	@Override
+	public ProductSimplified getSimplifiedProductById(Long id) {
+		return productRepository.findProductByIdProjectedForLimitedData(id);
 	}
 	
 	

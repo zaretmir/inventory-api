@@ -20,7 +20,6 @@ import org.springframework.web.server.ResponseStatusException;
 import com.empresa.hangar.service.HangarService;
 import com.empresa.product.dao.ProductDAO;
 import com.empresa.product.model.Product;
-import com.empresa.product.projection.ProductSimplified;
 
 @Service
 public class ProductServiceImp implements ProductService {
@@ -100,12 +99,15 @@ public class ProductServiceImp implements ProductService {
 		
 	}
 	
+	
 	@Override
 	public List<Product> listProductsByFirstLetter(char letter) {
 		// ¿Se podría hacer con el repo?
 		List<Product> allProducts = productDAO.getProductsTrueState();
 		
-		List<Product> matches = allProducts.stream().filter( p -> p.getName().charAt(0) == letter ).collect(Collectors.toList());
+		List<Product> matches = allProducts.stream()
+				.filter( p -> p.getName().charAt(0) == letter )
+				.collect(Collectors.toList());
 		
 		return matches;
 	}
@@ -148,11 +150,6 @@ public class ProductServiceImp implements ProductService {
 		return products;
 	}
 	*/
-	
-	@Override
-	public ProductSimplified getSimplifiedProductById(Long id) {
-		return productDAO.getSimplifiedProduct(id);
-	}
 	
 	@Override
 	public List<Product> getProductsMatchingSearch(String search) {

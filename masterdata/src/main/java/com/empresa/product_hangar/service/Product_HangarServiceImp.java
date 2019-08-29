@@ -33,7 +33,7 @@ public class Product_HangarServiceImp implements Product_HangarService{
 	@Override
 	public List<ProductSimplified> getProductsExcerpt(List<Product_Hangar> products_hangar) {
 		List<ProductSimplified> productsExcerpt = products_hangar.stream()
-				  .map( product -> productService.getSimplifiedProductById(product.getProductpk()))
+				  .map( product -> product_HangarDAO.getSimplifiedProductById(product.getProductpk()))
 				  .collect(Collectors.toList());
 		return productsExcerpt;
 	}

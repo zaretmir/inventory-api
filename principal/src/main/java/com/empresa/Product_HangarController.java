@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.empresa.product.projection.ProductSimplified;
@@ -22,7 +23,7 @@ import com.empresa.product_hangar.repository.Product_HangarRepository;
 import com.empresa.product_hangar.service.Product_HangarService;
 
 @RestController
-@RequestMapping("api/stock")
+@RequestMapping("api/stock-management")
 @CrossOrigin
 public class Product_HangarController {
 	
@@ -39,7 +40,7 @@ public class Product_HangarController {
 	 * Add stock of a product to an hangar
 	 * 
 	 */	
-	@PostMapping(value="/add-to-hangar", produces="application/json; charset=UTF-8")
+	@PostMapping(value="/entries", produces="application/json; charset=UTF-8")
 	public ResponseEntity<Product_Hangar> mapProductToHangar(@RequestBody ProductOfHangar productOfHangar) {
 		
 		Product_Hangar relationship = new Product_Hangar();
@@ -50,23 +51,20 @@ public class Product_HangarController {
 		return new ResponseEntity<Product_Hangar>(product_HangarService.save(relationship), HttpStatus.OK);
 	}
 	
-	/**
-	 * Returns a list of products that belong to a specific hangar
-	 * 
-	 */	
-	@GetMapping(value="/all-products/{hangarId}", produces="application/json; charset=UTF-8")
-	public ResponseEntity<List<Product_Hangar>> getProductsInHangar(@PathVariable Long hangarId) {
-		List<Product_Hangar> products = product_HangarService.getProductsByHangar(hangarId);
-		return new ResponseEntity<List<Product_Hangar>>(products, HttpStatus.OK);
+
+	@GetMapping(value="/entries/hangar/{hangar-id}", produces="application/json; charset=UTF-8")
+	public ResponseEntity<?> getProductsInHangar(
+			@PathVariable("hangar-id") Long id,
+			@RequestParam(defaultValue = "false") Boolean details) {
 		
-	}
-	
-	@GetMapping("/{hangarId}/products/simplified")
-	public ResponseEntity<List<ProductSimplified>> getSimplProducts(@PathVariable("hangarId") Long hangarId) {
-		List<Product_Hangar> products_hangar = product_HangarService.getProductsByHangar(hangarId);
-		List<ProductSimplified> producsExcerpt = product_HangarService.getProductsExcerpt(products_hangar);
+		List<Product_Hangar> products = product_HangarService.getProductsByHangar(id);
 		
-		return new ResponseEntity<List<ProductSimplified>>(producsExcerpt, HttpStatus.OK);
+		if (details) {
+			List<ProductSimplified> producsExcerpt = product_HangarService.getProductsExcerpt(products);
+			return new ResponseEntity<List<ProductSimplified>>(producsExcerpt, HttpStatus.OK);
+		}
+		
+		return new ResponseEntity<List<Product_Hangar>>(products, HttpStatus.OK);	
 	}
 	
 

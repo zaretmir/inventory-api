@@ -31,7 +31,5 @@ public interface ProductService {
 
 	Page<Product> getActiveProductsPage(Pageable pageRequest);
 
-	ProductSimplified getSimplifiedProductById(Long id);
-
 	List<Product> getProductsMatchingSearch(String search);
 }

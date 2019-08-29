@@ -17,7 +17,7 @@ import com.empresa.price.service.PriceService;
 import com.empresa.product.service.ProductService;
 
 @RestController
-@RequestMapping("/api/price")
+@RequestMapping("/api/price-management")
 @CrossOrigin
 public class PriceController {
 	
@@ -27,28 +27,28 @@ public class PriceController {
 	@Autowired
 	ProductService productService;
 	
-	@PostMapping("/product/{productId}")
-	public Price createPriceEntry(@RequestBody Price price, @PathVariable Long productId) {
-		return priceService.createPriceEntry(price, productId);
+	@PostMapping("/products/{product-id}")
+	public Price createPriceEntry(@RequestBody Price price, @PathVariable("product-id") Long id) {
+		return priceService.createPriceEntry(price, id);
 	}
 	
-	@GetMapping("/product/{productId}")
-	public List<Price> getEntriesByProductId(@PathVariable Long productId) {
-		return priceService.getEntriesByProductId(productId);		
+	@GetMapping("/products/{product-id}")
+	public List<Price> getEntriesByProductId(@PathVariable("product-id") Long id) {
+		return priceService.getEntriesByProductId(id);		
 	}
 	
-	@GetMapping("/prices") 
+	@GetMapping("/entries") 
 	public List<Price> getAllEntries() {
 		return priceService.getAllEntries();
 	}
 	
-	@DeleteMapping("/delete/{id}")
-	public void deletePrice(@PathVariable("id") Long id) {
+	@DeleteMapping("/entries/{entry-id}")
+	public void deletePrice(@PathVariable("entry-id") Long id) {
 		priceService.deleteById(id);
 	}
 	
-	@DeleteMapping("/delete/product/{id}")
-	public void deleteByProductId(@PathVariable("id") Long id) {
+	@DeleteMapping("/products/{product-id}")
+	public void deleteByProductId(@PathVariable("product-id") Long id) {
 		priceService.deleteByProductId(id);
 	}
 	

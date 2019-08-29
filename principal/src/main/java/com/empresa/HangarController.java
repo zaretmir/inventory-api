@@ -29,7 +29,7 @@ import com.empresa.hangar.model.Hangar;
 import com.empresa.hangar.service.HangarService;
 
 @RestController
-@RequestMapping("/api/hangar")
+@RequestMapping("/api/hangar-management")
 @CrossOrigin
 public class HangarController {
 	
@@ -71,7 +71,7 @@ public class HangarController {
 		return new ResponseEntity<Page<HangarDto>>( dtos, HttpStatus.OK);
 	}
 	
-	@GetMapping("/hangar/{id}")
+	@GetMapping("/hangars/{id}")
 	public ResponseEntity<HangarDto> listById(@PathVariable("id") long id) {
 		Hangar hangar = hangarService.getHangarById(id);
 		HangarDto dto = HangarBuilder.convertToDto(hangar);
@@ -79,7 +79,7 @@ public class HangarController {
 		return new ResponseEntity<HangarDto>( dto, HttpStatus.OK);
 	}
 	
-	@PostMapping("/hangar")
+	@PostMapping("/hangars")
 	public ResponseEntity<Hangar> createHangar(@Valid @RequestBody HangarDto dto) {
 		Hangar hangar = HangarBuilder.convertToEntity(dto);
 		
@@ -87,7 +87,7 @@ public class HangarController {
 	}
 	
 	
-	@PutMapping("/update/{id}")
+	@PutMapping("/hangars/{id}")
 	public ResponseEntity<Hangar> updateHangar(@PathVariable("id") Long id, @RequestBody HangarDto dto) {
 		// ?
 		Hangar update = HangarBuilder.convertToEntity(dto);
