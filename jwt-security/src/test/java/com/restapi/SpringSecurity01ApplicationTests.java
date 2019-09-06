@@ -9,7 +9,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import com.security.model.AppUser;
+import com.empresa.app_user.model.AppUser;
 import com.security.model.Role;
 import com.security.model.User_Role;
 import com.security.repository.RoleRepository;

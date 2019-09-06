@@ -1,5 +1,8 @@
 package com.empresa.price.dto;
 
+import javax.validation.constraints.PastOrPresent;
+import javax.validation.constraints.PositiveOrZero;
+
 import com.empresa.product.model.Product;
 
 public class PriceDto {
@@ -8,8 +11,10 @@ public class PriceDto {
 	
 	private Product product;
 	
+	@PositiveOrZero(message = "Price cannot be negative")
 	private double price;
 	
+	@PastOrPresent(message = "Date updated is not valid")
 	private Long dateUpdated;
 	
 	

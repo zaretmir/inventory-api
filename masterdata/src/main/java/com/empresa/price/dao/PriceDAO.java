@@ -17,4 +17,6 @@ public interface PriceDAO {
 
 	void deleteByProductId(Long productId);
 
+	Price getLatestEntry(Product product);
+
 }

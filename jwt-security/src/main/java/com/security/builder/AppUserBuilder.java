@@ -1,7 +1,7 @@
 package com.security.builder;
 
+import com.empresa.app_user.model.AppUser;
 import com.security.dto.AppUserDTO;
-import com.security.model.AppUser;
 
 public class AppUserBuilder {
 	

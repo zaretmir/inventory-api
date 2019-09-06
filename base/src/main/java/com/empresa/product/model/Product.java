@@ -6,7 +6,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
-import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotBlank;
 
 import com.empresa.hangar.model.Hangar;
 
@@ -20,7 +20,7 @@ public class Product {
 	private long id;
 	
 	@Column
-	@NotEmpty
+	@NotBlank(message = "Product name cannot be empty")
 	private String name;
 	
 	@Column

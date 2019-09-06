@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import com.empresa.exception.EntityNotFoundException;
 import com.empresa.price.dao.PriceDAO;
 import com.empresa.price.model.Price;
 import com.empresa.product.model.Product;
@@ -27,6 +28,8 @@ public class PriceServiceImp implements PriceService {
 			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "No price entries found");
 	}
 	
+	//FIX TRY CATCH
+	
 	@Override
 	public Price createPriceEntry(Price price, Long productId) {
 		
@@ -34,8 +37,15 @@ public class PriceServiceImp implements PriceService {
 			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Price not valid");
 
 		// El productService ya valida el producto
-		Product product = productService.getProductById(productId);
-		price.setProduct(product);
+		Product product;
+		try {
+			product = productService.getProductById(productId);
+			price.setProduct(product);
+		} catch (EntityNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 		
 		Date date = new Date();
 		price.setDateUpdated(date.getTime());
@@ -51,15 +61,39 @@ public class PriceServiceImp implements PriceService {
 		return entries;
 	}
 	
+	// FIX TRY CATCH
 	@Override
 	public List<Price> getEntriesByProductId(Long productId) {
-		Product product = productService.getProductById(productId);
+		Product product;
+		try {
+			product = productService.getProductById(productId);
+			List<Price> entries = priceDAO.getEntriesByProduct(product);
+			checkIfEmpty(entries);
+			return entries;
+		} catch (EntityNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}	
+	
+		return null;
 		
-		List<Price> entries = priceDAO.getEntriesByProduct(product);
+	}
+	
+	@Override
+	public Price getLatestEntryByProductId(Long productId) {
+		Product product;
+		try {
+			product = productService.getProductById(productId);
+			Price entry = priceDAO.getLatestEntry(product);
+			//checkIfEmpty(entries);
+			return entry;
+		} catch (EntityNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}	
+	
+		return null;
 		
-		checkIfEmpty(entries);
-		
-		return entries;
 	}
 
 	@Override

@@ -1,6 +1,6 @@
 package com.security.dao;
 
-import com.security.model.AppUser;
+import com.empresa.app_user.model.AppUser;
 
 public interface AppUserDAO {
 	
@@ -9,5 +9,9 @@ public interface AppUserDAO {
 	AppUser save(AppUser user);
 	
 	Boolean existsByUsername(String username);
+
+	boolean existsById(Long id);
+
+	AppUser getUserById(Long id);
 
 }

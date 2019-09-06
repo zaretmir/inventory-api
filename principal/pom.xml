@@ -7,15 +7,26 @@
   </parent>
   <artifactId>principal</artifactId>
   
+ 
   <dependencies>
   	<dependency>
   		<groupId>com.crud</groupId>
-  		<artifactId>base</artifactId>
+  		<artifactId>hangars</artifactId>
   		<version>0.0.1-SNAPSHOT</version>
   	</dependency>
   	<dependency>
   		<groupId>com.crud</groupId>
-  		<artifactId>masterdata</artifactId>
+  		<artifactId>products</artifactId>
+  		<version>0.0.1-SNAPSHOT</version>
+  	</dependency>
+  	<dependency>
+  		<groupId>com.crud</groupId>
+  		<artifactId>profile</artifactId>
+  		<version>0.0.1-SNAPSHOT</version>
+  	</dependency>
+  	<dependency>
+  		<groupId>com.crud</groupId>
+  		<artifactId>e-commerce</artifactId>
   		<version>0.0.1-SNAPSHOT</version>
   	</dependency>
   	<dependency>
@@ -28,12 +39,8 @@
   		<artifactId>jwt-security</artifactId>
   		<version>0.0.1-SNAPSHOT</version>
   	</dependency>
+  	
 
-  	<dependency>
-  		<groupId>org.springframework.boot</groupId>
-  		<artifactId>spring-boot-configuration-processor</artifactId>
-  		<optional>true</optional>
-  	</dependency>
   	<dependency>
   		<groupId>org.springframework.boot</groupId>
   		<artifactId>spring-boot-configuration-processor</artifactId>

@@ -27,12 +27,12 @@ public class PriceController {
 	@Autowired
 	ProductService productService;
 	
-	@PostMapping("/products/{product-id}")
+	@PostMapping("/entries/products/{product-id}")
 	public Price createPriceEntry(@RequestBody Price price, @PathVariable("product-id") Long id) {
 		return priceService.createPriceEntry(price, id);
 	}
 	
-	@GetMapping("/products/{product-id}")
+	@GetMapping("/entries/products/{product-id}")
 	public List<Price> getEntriesByProductId(@PathVariable("product-id") Long id) {
 		return priceService.getEntriesByProductId(id);		
 	}
@@ -42,15 +42,17 @@ public class PriceController {
 		return priceService.getAllEntries();
 	}
 	
+	@DeleteMapping("/entries/products/{product-id}")
+	public void deleteByProductId(@PathVariable("product-id") Long id) {
+		priceService.deleteByProductId(id);
+	}
+	
 	@DeleteMapping("/entries/{entry-id}")
 	public void deletePrice(@PathVariable("entry-id") Long id) {
 		priceService.deleteById(id);
 	}
 	
-	@DeleteMapping("/products/{product-id}")
-	public void deleteByProductId(@PathVariable("product-id") Long id) {
-		priceService.deleteByProductId(id);
-	}
+	
 	
 
 }

@@ -30,6 +30,11 @@ public class PriceDAOImp implements PriceDAO {
 	public List<Price> getAllEntries() {
 		return priceRepository.findAll();
 	}
+	
+	@Override
+	public Price getLatestEntry(Product product) {
+		return priceRepository.findTopByProductOrderByDateUpdatedDesc(product);
+	}
 
 	@Override
 	public List<Price> getEntriesByProduct(Product product) {

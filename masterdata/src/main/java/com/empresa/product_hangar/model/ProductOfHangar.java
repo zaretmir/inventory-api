@@ -1,11 +1,17 @@
 package com.empresa.product_hangar.model;
 
+import javax.validation.constraints.PositiveOrZero;
+
 public class ProductOfHangar {
 	
+	@PositiveOrZero(message = "Hangar id not valid")
 	private Long hangarpk;
+	
+	@PositiveOrZero(message = "Product id not valid")
 	private Long productpk;
 	
-	private int qtyph;
+	@PositiveOrZero(message = "Quantity cannot be negative")
+	private int qty;
 
 	public Long getHangarpk() {
 		return hangarpk;
@@ -23,12 +29,12 @@ public class ProductOfHangar {
 		this.productpk = productpk;
 	}
 
-	public int getQtyph() {
-		return qtyph;
+	public int getQty() {
+		return qty;
 	}
 
-	public void setQtyph(int qtyph) {
-		this.qtyph = qtyph;
+	public void setQty(int qty) {
+		this.qty = qty;
 	}
 
 

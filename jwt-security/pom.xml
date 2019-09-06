@@ -11,8 +11,7 @@
   		<groupId>com.crud</groupId>
   		<artifactId>base</artifactId>
   		<version>0.0.1-SNAPSHOT</version>
-  	</dependency>
-  
+  	</dependency>  
   
   <dependency>
 			<groupId>io.jsonwebtoken</groupId>
@@ -43,7 +42,11 @@
 		    <artifactId>junit</artifactId>
 		    <scope>test</scope>
 		</dependency>
-		
+		<dependency>
+		    <groupId>junit</groupId>
+		    <artifactId>junit</artifactId>
+		    <scope>test</scope>
+		</dependency>		
 		</dependencies>
 </project>
 

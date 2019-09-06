@@ -15,10 +15,10 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.empresa.app_user.model.AppUser;
 import com.security.builder.AppUserBuilder;
 import com.security.dao.AppUserDAO;
 import com.security.dto.AppUserDTO;
-import com.security.model.AppUser;
 import com.security.model.Role;
 import com.security.model.User_Role;
 import com.security.repository.RoleRepository;

@@ -18,4 +18,6 @@ public interface PriceService {
 
 	void deleteByProductId(Long id);
 
+	Price getLatestEntryByProductId(Long productId);
+
 }

@@ -32,74 +32,69 @@ import com.empresa.hangar.service.HangarService;
 @RequestMapping("/api/hangar-management")
 @CrossOrigin
 public class HangarController {
-	
+
 	@Autowired
 	HangarService hangarService;
-	
-	
+
 	@GetMapping("/hangars")
 	public ResponseEntity<List<HangarDto>> getHangars(@RequestParam(required = false) String name) {
-		
+
 		List<Hangar> results = new ArrayList<Hangar>();
-		
+
 		if (name != null) {
 			results = hangarService.getProductsMatchingSearch(name);
 		} else {
 			results = hangarService.getHangarsStateTrue();
 		}
-		
+
 		List<HangarDto> response = results.stream()
-				.map( hangar -> HangarBuilder.convertToDto(hangar))
+				.map(hangar -> HangarBuilder.convertToDto(hangar))
 				.collect(Collectors.toList());
-		
+
 		return new ResponseEntity<List<HangarDto>>(response, HttpStatus.OK);
 	}
-	
+
 	@GetMapping("/hangars/{page}/{items}")
 	public ResponseEntity<Page<HangarDto>> listPag(@PathVariable("page") int page, @PathVariable("items") int items) {
-		
+
 		Pageable pageRequest = PageRequest.of(page, items);
-		
+
 		Page<Hangar> hangars = hangarService.getActiveHangarsPage(pageRequest);
-				
-		Page<HangarDto> dtos = new PageImpl<HangarDto>(
-				hangars.getContent().stream()
-					.map(hangar -> HangarBuilder.convertToDto(hangar)).collect(Collectors.toList()),
+
+		Page<HangarDto> dtos = new PageImpl<HangarDto>(hangars.getContent().stream()
+				.map(hangar -> HangarBuilder.convertToDto(hangar)).collect(Collectors.toList()),
 				pageRequest,
 				hangars.getTotalElements());
-		
-		return new ResponseEntity<Page<HangarDto>>( dtos, HttpStatus.OK);
+
+		return new ResponseEntity<Page<HangarDto>>(dtos, HttpStatus.OK);
 	}
-	
+
 	@GetMapping("/hangars/{id}")
 	public ResponseEntity<HangarDto> listById(@PathVariable("id") long id) {
 		Hangar hangar = hangarService.getHangarById(id);
 		HangarDto dto = HangarBuilder.convertToDto(hangar);
-		
-		return new ResponseEntity<HangarDto>( dto, HttpStatus.OK);
+
+		return new ResponseEntity<HangarDto>(dto, HttpStatus.OK);
 	}
-	
+
 	@PostMapping("/hangars")
 	public ResponseEntity<Hangar> createHangar(@Valid @RequestBody HangarDto dto) {
 		Hangar hangar = HangarBuilder.convertToEntity(dto);
-		
+
 		return new ResponseEntity<Hangar>(hangarService.createHangar(hangar), HttpStatus.OK);
 	}
-	
-	
+
 	@PutMapping("/hangars/{id}")
-	public ResponseEntity<Hangar> updateHangar(@PathVariable("id") Long id, @RequestBody HangarDto dto) {
+	public ResponseEntity<Hangar> updateHangar(@PathVariable("id") Long id, @Valid @RequestBody HangarDto dto) {
 		// ?
 		Hangar update = HangarBuilder.convertToEntity(dto);
-		
-		return new ResponseEntity<Hangar>(hangarService.updateHangar(id, update), HttpStatus.OK);	
+
+		return new ResponseEntity<Hangar>(hangarService.updateHangar(id, update), HttpStatus.OK);
 	}
-	
+
 	@PutMapping("/delete/{id}")
 	public ResponseEntity<Hangar> deleteHangar(@PathVariable("id") Long id) {
 		return new ResponseEntity<Hangar>(hangarService.logicDeleteHangar(id), HttpStatus.OK);
 	}
-	
-
 
 }

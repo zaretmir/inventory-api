@@ -42,6 +42,12 @@
 			<groupId>com.fasterxml.jackson.core</groupId>
 			<artifactId>jackson-databind</artifactId>
 		</dependency>
+		<dependency>
+		    <groupId>org.projectlombok</groupId>
+		    <artifactId>lombok</artifactId>
+		    <version>1.18.8</version>
+		    <scope>provided</scope>
+		</dependency>
 		  	<!-- de jwt security -->
   	
 	</dependencies>
@@ -50,6 +56,9 @@
 		<module>principal</module>
 		<module>jwt-security</module>
 		<module>base</module>
-		<module>masterdata</module>		
+		<module>masterdata</module>	
+		<module>e-commerce</module>
+		<module>hangars</module>
+		<module>products</module>
 	</modules>
 </project>

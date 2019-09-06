@@ -6,46 +6,26 @@ import javax.persistence.Id;
 import javax.persistence.IdClass;
 import javax.persistence.Table;
 
+import lombok.Getter;
+import lombok.Setter;
+
 @Entity
 @IdClass(Product_Hangar_Id.class)
 @Table(name="product_hangar")
+@Getter @Setter
 public class Product_Hangar {
 
 	
 	@Id
 	@Column(name="hangarpk")
-	private Long hangarpk;
+	private Long hangarPk;
 	
 	@Id
 	@Column(name="productpk")
-	private Long productpk;
+	private Long productPk;
 	
-	@Column(name="qtyph")
-	private Integer qtyph;
-
-	public Long getHangarpk() {
-		return hangarpk;
-	}
-
-	public void setHangarpk(Long hangarpk) {
-		this.hangarpk = hangarpk;
-	}
-
-	public Long getProductpk() {
-		return productpk;
-	}
-
-	public void setProductpk(Long productpk) {
-		this.productpk = productpk;
-	}
-
-	public Integer getQtyph() {
-		return qtyph;
-	}
-
-	public void setQtyph(Integer qtyph) {
-		this.qtyph = qtyph;
-	}
+	@Column(name="qty")
+	private Integer qty;
 
 	
 }
