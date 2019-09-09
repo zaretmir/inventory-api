@@ -14,12 +14,18 @@ public class UserProfileDAOImpl implements UserProfileDAO {
 	
 	@Override
 	public UserProfile getProfileById(Long id) {
-		return profileRepository.getOne(id);
+		UserProfile profile = profileRepository.getOne(id);
+		return profile;
 	}
 	
 	@Override
 	public UserProfile saveUserProfile(Long id, UserProfile profile) {
 		return profileRepository.saveAndFlush(profile);
+	}
+
+	@Override
+	public boolean existsProfile(Long id) {
+		return profileRepository.existsById(id);
 	}
 
 }

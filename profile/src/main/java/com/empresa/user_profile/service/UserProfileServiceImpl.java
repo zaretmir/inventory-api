@@ -27,5 +27,10 @@ public class UserProfileServiceImpl implements UserProfileService {
 		return profileDAO.saveUserProfile(id, profile);
 	}
 	
+	@Override
+	public boolean existsProfile(Long id) {
+		return profileDAO.existsProfile(id);
+	}
+	
 
 }

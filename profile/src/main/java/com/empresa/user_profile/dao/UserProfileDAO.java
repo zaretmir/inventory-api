@@ -8,4 +8,6 @@ public interface UserProfileDAO {
 
 	UserProfile saveUserProfile(Long id, UserProfile profile);
 
+	boolean existsProfile(Long id);
+
 }

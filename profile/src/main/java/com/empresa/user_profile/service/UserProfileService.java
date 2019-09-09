@@ -9,4 +9,6 @@ public interface UserProfileService {
 
 	UserProfile saveProfileData(Long id, UserProfile profile);
 
+	boolean existsProfile(Long id);
+
 }
