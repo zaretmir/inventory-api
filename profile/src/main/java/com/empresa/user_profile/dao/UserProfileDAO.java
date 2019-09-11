@@ -6,8 +6,8 @@ public interface UserProfileDAO {
 
 	UserProfile getProfileById(Long id);
 
-	UserProfile saveUserProfile(Long id, UserProfile profile);
-
 	boolean existsProfile(Long id);
+
+	UserProfile saveUserProfile(UserProfile profile);
 
 }

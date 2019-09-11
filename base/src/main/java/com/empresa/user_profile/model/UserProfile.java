@@ -11,6 +11,8 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import com.empresa.app_user.model.AppUser;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import lombok.Getter;
@@ -19,20 +21,17 @@ import lombok.Setter;
 @Entity
 @Table(name = "appuserprofile")
 @Getter @Setter
-/*@JsonIdentityInfo(
-	generator = ObjectIdGenerators.PropertyGenerator.class,
-	property = "id")*/
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class UserProfile {
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(name = "id")
+	@GeneratedValue(strategy=GenerationType.AUTO)
+	@Column(name = "user_app_user_id", unique = true, nullable = false)
 	private Long id;
 	
 	@OneToOne(fetch = FetchType.EAGER)
 	@MapsId
-	@JsonManagedReference
-	private AppUser user;
+	private AppUser userApp;
 	
 	@Column(name = "first_name")
 	private String name;
@@ -45,5 +44,12 @@ public class UserProfile {
 	
 	@Column(name = "phone_number")
 	private Integer phoneNumber;
+	
+	public UserProfile() {}
+
+    public UserProfile(AppUser userApp) {
+        this.userApp = userApp;
+        userApp.setUserProfile(this);
+    }
 
 }

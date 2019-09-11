@@ -7,7 +7,7 @@ public interface UserProfileService {
 
 	UserProfile retrieveProfileDataById(Long id);
 
-	UserProfile saveProfileData(Long id, UserProfile profile);
+	UserProfile saveProfileData(Long userId, UserProfile profile);
 
 	boolean existsProfile(Long id);
 

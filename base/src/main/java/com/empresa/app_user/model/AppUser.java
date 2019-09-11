@@ -11,7 +11,8 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import com.empresa.user_profile.model.UserProfile;
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -20,14 +21,12 @@ import lombok.Setter;
 @Entity
 @Table(name="appuser", schema="db_security")
 @Getter @Setter
-/*@JsonIdentityInfo(
-	generator = ObjectIdGenerators.PropertyGenerator.class,
-	property = "user_id")*/
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"}) // Solves "No serializer found" error
 public class AppUser {
 	
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(name = "user_id")
+	@GeneratedValue(strategy=GenerationType.AUTO)
+	@Column(name = "user_id", unique = true, nullable = false)
 	private Long id;
 	
 	@Column(name = "username")
@@ -36,44 +35,13 @@ public class AppUser {
 	@Column(name = "password")
 	private String password;
 	
-	
-	@OneToOne(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-	@JsonBackReference
+	@OneToOne(
+		mappedBy = "userApp",
+		cascade = CascadeType.ALL,
+		orphanRemoval = true,
+		fetch = FetchType.EAGER
+		)
+	@JsonIgnore
 	private UserProfile userProfile;
-	
-	
-	// @Column(name = "order")
-	// private Order order;
-	
-	/*
-	@ManyToMany(cascade = CascadeType.MERGE)
-	@JoinTable(
-			name="user_role",
-			joinColumns= {@JoinColumn(name="user_id", referencedColumnName="user_id")},
-			inverseJoinColumns= {@JoinColumn(name="role_id", referencedColumnName="role_id")}
-			)
-	private List<Role> roles;
-	*/
-
-	/*
-	public List<Role> getRoles() {
-		return roles;
-	}
-
-	public void setRoles(List<Role> roles) {
-		this.roles = roles;
-	}
-	*/
-
-	/*
-	public Collection<GrantedAuthority> getAuthorities() {
-		List<GrantedAuthority> list = new ArrayList<GrantedAuthority>();
-		
-		for (Role role:roles) {
-			list.add(new SimpleGrantedAuthority(role.getRolename()));			
-		}		
-		return list;
-	}*/
-
 
 }

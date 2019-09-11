@@ -5,12 +5,16 @@ import org.springframework.stereotype.Component;
 
 import com.empresa.user_profile.model.UserProfile;
 import com.empresa.user_profile.repository.UserProfileRepository;
+import com.security.dao.AppUserDAO;
 
 @Component
 public class UserProfileDAOImpl implements UserProfileDAO {
 	
 	@Autowired
 	UserProfileRepository profileRepository;
+	
+	@Autowired
+	AppUserDAO userDAO;
 	
 	@Override
 	public UserProfile getProfileById(Long id) {
@@ -19,7 +23,7 @@ public class UserProfileDAOImpl implements UserProfileDAO {
 	}
 	
 	@Override
-	public UserProfile saveUserProfile(Long id, UserProfile profile) {
+	public UserProfile saveUserProfile(UserProfile profile) {
 		return profileRepository.saveAndFlush(profile);
 	}
 
