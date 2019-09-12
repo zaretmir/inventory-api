@@ -23,6 +23,14 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
 		return buildResponseEntity(apiError);
 	}
 	
+	@ExceptionHandler(ApplicationException.class)
+	protected ResponseEntity<Object> handleApplicationException(ApplicationException ex) {
+		ApiError apiError = new ApiError();
+		apiError.setMessage(ex.getMessage());
+		apiError.setStatus(ex.getStatus());
+		return buildResponseEntity(apiError);
+	}
+	
 	@Override // No es necesaria la anotación. Preguntar a Jose cómo hace entonces para encontrarlo. 
 	protected ResponseEntity<Object> handleMethodArgumentNotValid(
 			MethodArgumentNotValidException ex,
