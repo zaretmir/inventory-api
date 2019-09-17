@@ -9,6 +9,7 @@ import com.empresa.ecommerce.model.Order;
 import com.empresa.ecommerce.model.OrderItem;
 import com.empresa.exception.EntityNotFoundException;
 import com.empresa.product.dao.ProductDAO;
+import com.empresa.product_hangar.model.Product_Hangar;
 
 @Service
 public class ItemServiceImpl implements ItemService {
@@ -29,10 +30,18 @@ public class ItemServiceImpl implements ItemService {
 		
 		return itemDAO.saveOrderItem(item);
 	}
-	
+	/*
 	@Override
 	public OrderItem getOrderItem(Long orderId, Long productId) {
 		OrderItem item = itemDAO.findByOrderPkAndProductPk(orderId, productId);
+		if (item == null)
+			throw new EntityNotFoundException(OrderItem.class);
+		return item;
+	}*/
+	
+	@Override
+	public OrderItem getOrderItem(Long orderId, Product_Hangar itemOrigin) {
+		OrderItem item = itemDAO.findByOrderPkAndItemOrigin(orderId, itemOrigin);
 		if (item == null)
 			throw new EntityNotFoundException(OrderItem.class);
 		return item;
@@ -40,7 +49,8 @@ public class ItemServiceImpl implements ItemService {
 	
 	@Override
 	public OrderItem updateOrderItem(OrderItem updatedItem) {
-		OrderItem item = itemDAO.findByOrderPkAndProductPk(updatedItem.getOrderPk(), updatedItem.getProductPk());
+		//OrderItem item = itemDAO.findByOrderPkAndProductPk(updatedItem.getOrderPk(), updatedItem.getProductPk());
+		OrderItem item = itemDAO.findByOrderPkAndItemOrigin(updatedItem.getOrderPk(), updatedItem.getItemOrigin());
 		
 		if (item == null)
 			throw new EntityNotFoundException(OrderItem.class);

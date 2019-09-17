@@ -52,8 +52,8 @@ public class OrderServiceImpl implements OrderService {
 	}
 	
 	@Override
-	public Order addItem(Order order, Product_Hangar stockEntry, OrderItem requestedItem) {
-		if (stockEntry.getQuantity() < requestedItem.getOrderedQuantity())
+	public Order addItem(Order order, OrderItem requestedItem) {
+		if (requestedItem.getItemOrigin().getQuantity() < requestedItem.getOrderedQuantity())
 			throw new ApplicationException(ApplicationExceptionCause.NO_STOCK);
 		
 		try {
@@ -63,14 +63,15 @@ public class OrderServiceImpl implements OrderService {
 			addItemAsNew(order, requestedItem);
 		}		
 		
-		updateStockQuantity(stockEntry, requestedItem.getOrderedQuantity());
+		updateStockQuantity(requestedItem.getItemOrigin(), requestedItem.getOrderedQuantity());
 		updateOrderTotals(order);
 		
 		return orderDAO.saveOrder(order);
 	}
 	
 	private void updateExistentItem(OrderItem requestedItem) {
-		OrderItem item = itemService.getOrderItem(requestedItem.getOrderPk(), requestedItem.getProductPk());
+		//OrderItem item = itemService.getOrderItem(requestedItem.getOrderPk(), requestedItem.getProductPk());
+		OrderItem item = itemService.getOrderItem(requestedItem.getOrderPk(), requestedItem.getItemOrigin());
 		
 		int newQuantity = item.getOrderedQuantity() + requestedItem.getOrderedQuantity();
 		item.setOrderedQuantity(newQuantity);
@@ -108,7 +109,7 @@ public class OrderServiceImpl implements OrderService {
 	private Order updateTotalAmount(Order order) {
 		double totalAmount = order.getOrderItems().stream()
 				.mapToDouble( product -> {
-					Long productId = product.getProductPk();
+					Long productId = product.getItemOrigin().getProductPk();
 					double productPrice = priceService.getLatestEntryByProductId(productId).getPrice();
 					int productQty = product.getOrderedQuantity();
 

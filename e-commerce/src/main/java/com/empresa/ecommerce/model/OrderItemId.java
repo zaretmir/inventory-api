@@ -2,6 +2,8 @@ package com.empresa.ecommerce.model;
 
 import java.io.Serializable;
 
+import com.empresa.product_hangar.model.Product_Hangar_Id;
+
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
@@ -12,12 +14,12 @@ public class OrderItemId implements Serializable {
 	
 	private static final long serialVersionUID = -4351475789696540461L;
 	
-	private Long productPk;
 	private Long orderPk;
+	private Product_Hangar_Id itemOrigin;
 
-	public OrderItemId(Long productPk, Long orderPk) {
+	public OrderItemId(Product_Hangar_Id itemOrigin, Long orderPk) {
 		super();
-		this.productPk = productPk;
+		this.itemOrigin = itemOrigin;
 		this.orderPk = orderPk;
 	}
 	

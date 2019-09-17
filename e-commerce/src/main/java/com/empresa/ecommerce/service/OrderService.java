@@ -12,7 +12,8 @@ public interface OrderService {
 
 	Order createOrder(@Valid Order orderReq);
 
-	Order addItem(Order order, Product_Hangar stockEntry, OrderItem item);
+	//Order addItem(Order order, Product_Hangar stockEntry, OrderItem item);
+	Order addItem(Order order, OrderItem item);
 
 	List<Order> getAllOrdersByUserId(Long id);
 
