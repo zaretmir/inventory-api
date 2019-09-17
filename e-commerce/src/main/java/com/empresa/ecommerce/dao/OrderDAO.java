@@ -1,5 +1,7 @@
 package com.empresa.ecommerce.dao;
 
+import java.util.List;
+
 import javax.validation.Valid;
 
 import com.empresa.ecommerce.model.Order;
@@ -12,6 +14,6 @@ public interface OrderDAO {
 
 	Order getOrderById(Long id);
 
-	Order updateOrder(Long id, Long productId, int qty);
+	List<Order> getOrdersByUserId(Long id);
 	
 }

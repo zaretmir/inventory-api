@@ -1,9 +1,13 @@
 package com.empresa.ecommerce.service;
 
-import com.empresa.ecommerce.model.Item;
+import com.empresa.ecommerce.model.OrderItem;
 
 public interface ItemService {
 
-	Item saveItemOrder(Long orderId, Long productId, int qty);
+	OrderItem updateOrderItem(OrderItem updatedItem);
+
+	OrderItem getOrderItem(Long orderId, Long productId);
+
+	OrderItem saveOrderItem(OrderItem item);
 
 }

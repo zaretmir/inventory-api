@@ -1,11 +1,10 @@
 package com.empresa.ecommerce.dao;
 
-import com.empresa.ecommerce.model.Item;
+import com.empresa.ecommerce.model.OrderItem;
 
 public interface ItemDAO {
 
-	Item updateProductInBasket(Item productOrd);
+	OrderItem saveOrderItem(OrderItem productOrd);
 
-	Item getItemByProductId(Long id);
-
+	OrderItem findByOrderPkAndProductPk(Long orderId, Long productId);
 }

@@ -1,16 +1,21 @@
 package com.empresa.ecommerce.service;
 
+import java.util.List;
+
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.empresa.ecommerce.dao.OrderDAO;
-import com.empresa.ecommerce.model.Item;
 import com.empresa.ecommerce.model.Order;
+import com.empresa.ecommerce.model.OrderItem;
+import com.empresa.exception.ApplicationException;
+import com.empresa.exception.ApplicationExceptionCause;
 import com.empresa.exception.EntityNotFoundException;
 import com.empresa.price.service.PriceService;
-import com.empresa.product.dao.ProductDAO;
+import com.empresa.product_hangar.model.Product_Hangar;
+import com.empresa.product_hangar.service.Product_HangarService;
 
 @Service
 public class OrderServiceImpl implements OrderService {
@@ -19,71 +24,93 @@ public class OrderServiceImpl implements OrderService {
 	OrderDAO orderDAO;
 	
 	@Autowired
-	ProductDAO productDAO;
+	Product_HangarService stockService;
 	
 	@Autowired
-	ItemService ItemService;
+	ItemService itemService;
 	
 	@Autowired
 	PriceService priceService;
 
 	@Override
-	public Order createOrder(@Valid Order orderReq) {	
-		
-		
-		if (false) // exception
-			throw new EntityNotFoundException(Order.class);
-		
+	public Order createOrder(@Valid Order orderReq) {
 		return orderDAO.saveOrder(orderReq);
 	}
 	
+	
 	@Override
-	public Order retrieveOrderById(Long id) {
-		
+	public Order getOrderById(Long id) {
 		if (!orderDAO.existsById(id))
 			throw new EntityNotFoundException(Order.class);
 		
-		return this.updateOrderData(orderDAO.getOrderById(id));
-	}
-
-	@Override
-	public Order addItem(Long orderId, Long productId, int qty) {
-
-		if (!orderDAO.existsById(orderId))
-			throw new EntityNotFoundException(Order.class);
-		
-		
-		if (false) // Comprobar que quedan existencias de product.  ¿Poner esto en otro lado?
-			System.out.println("No hay existencias del producto");
-		
-		Order order = this.retrieveOrderById(orderId);
-		
-		Item item = ItemService.saveItemOrder(orderId, productId, qty);
-		
-		order.getItems().add(item);
-		
-		Order updated = orderDAO.saveOrder(order);
-		
-		Order updated2 = updateOrderData(order);
-		
-		
-		return updated2;
-		
+		return this.updateOrderTotals(orderDAO.getOrderById(id));
 	}
 	
-	private Order updateOrderData(Order order) {
+	@Override
+	public List<Order> getAllOrdersByUserId(Long id) {
+		return orderDAO.getOrdersByUserId(id);
+	}
+	
+	@Override
+	public Order addItem(Order order, Product_Hangar stockEntry, OrderItem requestedItem) {
+		if (stockEntry.getQuantity() < requestedItem.getOrderedQuantity())
+			throw new ApplicationException(ApplicationExceptionCause.NO_STOCK);
 		
-		int totalItems = order.getItems().stream()
-				.mapToInt( product -> product.getQtyOrdered() )
+		try {
+			updateExistentItem(requestedItem);			
+		}
+		catch (EntityNotFoundException ex) { // The product was not yet in the order
+			addItemAsNew(order, requestedItem);
+		}		
+		
+		updateStockQuantity(stockEntry, requestedItem.getOrderedQuantity());
+		updateOrderTotals(order);
+		
+		return orderDAO.saveOrder(order);
+	}
+	
+	private void updateExistentItem(OrderItem requestedItem) {
+		OrderItem item = itemService.getOrderItem(requestedItem.getOrderPk(), requestedItem.getProductPk());
+		
+		int newQuantity = item.getOrderedQuantity() + requestedItem.getOrderedQuantity();
+		item.setOrderedQuantity(newQuantity);
+		itemService.updateOrderItem(item);
+	}
+	
+	private void addItemAsNew(Order order, OrderItem requestedItem) {
+		OrderItem savedItem = itemService.saveOrderItem(requestedItem);
+		order.getOrderItems().add(savedItem);
+	}
+	
+	private void updateStockQuantity(Product_Hangar stockEntry, int quantityRequested) {
+		int quantityRemaining =  stockEntry.getQuantity() - quantityRequested;
+		stockEntry.setQuantity(quantityRemaining);
+		stockService.updateEntry(stockEntry);
+	}
+	
+	private Order updateOrderTotals(Order order) {
+		order = updateTotalItems(order);
+		order = updateTotalAmount(order);		
+		
+		return orderDAO.saveOrder(order);
+	}
+	
+	private Order updateTotalItems(Order order) {
+		int totalItems = order.getOrderItems().stream()
+				.mapToInt( product -> product.getOrderedQuantity() )
 				.sum();
 		
 		order.setTotalItems(totalItems);
 		
-		double totalAmount = order.getItems().stream()
+		return order;
+	}
+	
+	private Order updateTotalAmount(Order order) {
+		double totalAmount = order.getOrderItems().stream()
 				.mapToDouble( product -> {
 					Long productId = product.getProductPk();
 					double productPrice = priceService.getLatestEntryByProductId(productId).getPrice();
-					int productQty = product.getQtyOrdered();
+					int productQty = product.getOrderedQuantity();
 
 					return productPrice * productQty;
 				})
@@ -91,7 +118,7 @@ public class OrderServiceImpl implements OrderService {
 		
 		order.setTotalAmount(totalAmount);
 		
-		return orderDAO.saveOrder(order);
+		return order;
 	}
-
+	
 }
