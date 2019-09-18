@@ -1,4 +1,4 @@
-package com.empresa.product.dao;
+package com.app.products.dao;
 
 import java.util.List;
 
@@ -7,9 +7,9 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
 
-import com.empresa.product.model.Product;
-import com.empresa.product.projection.ProductSimplified;
-import com.empresa.product.repository.ProductRepository;
+import com.app.base.product.model.Product;
+import com.app.products.projection.ProductSimplified;
+import com.app.products.repository.ProductRepository;
 
 @Component
 public class ProductDAOImp implements ProductDAO {
@@ -18,14 +18,13 @@ public class ProductDAOImp implements ProductDAO {
 	ProductRepository productRepository;
 
 	@Override
-	public Product getProductById(Long productId) {
+	public Product findById(Long productId) {
 		return productRepository.findById(productId).get();
 	}
 	
 	@Override
-	public List<Product> getProductsTrueState() {
+	public List<Product> findByIsStateTrue() {
 		return productRepository.findByIsStateTrue();
-		//return productRepository.findAll();
 	}
 	
 	@Override
@@ -35,23 +34,14 @@ public class ProductDAOImp implements ProductDAO {
 	
 	@Override
 	public Product save(Product product) {
-		//hangarDAO.addProductToHangar(product);
 		return productRepository.save(product);
 	}
 	
 	@Override
 	public Product delete(Product product) {
-		product.setIsState(false);
+		product.setState(false);
 		return productRepository.save(product);
 	}
-	/*
-
-	@Override
-	public List<Product> findByHangar(Long id) {
-		Hangar hangar = hangarsRepository.findById(id).get();
-		return productRepository.findByHangar(hangar);
-	}
-	*/
 
 	@Override
 	public Page<Product> getActiveProductsPage(Pageable pageRequest) {
@@ -59,7 +49,7 @@ public class ProductDAOImp implements ProductDAO {
 	}
 
 	@Override
-	public List<Product> getProductsMatchingSearch(String search) {
+	public List<Product> findByIsStateTrueAndNameContaining(String search) {
 		return productRepository.findByIsStateTrueAndNameContaining(search);
 	}
 

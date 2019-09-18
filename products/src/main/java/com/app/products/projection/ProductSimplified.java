@@ -1,4 +1,4 @@
-package com.empresa.product.projection;
+package com.app.products.projection;
 
 import org.springframework.beans.factory.annotation.Value;
 

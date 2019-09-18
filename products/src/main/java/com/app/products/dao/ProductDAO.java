@@ -1,18 +1,18 @@
-package com.empresa.product.dao;
+package com.app.products.dao;
 
 import java.util.List;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
-import com.empresa.product.model.Product;
-import com.empresa.product.projection.ProductSimplified;
+import com.app.base.product.model.Product;
+import com.app.products.projection.ProductSimplified;
 
 public interface ProductDAO {
 	
-	Product getProductById(Long productId);
+	Product findById(Long productId);
 	
-	List<Product> getProductsTrueState();
+	List<Product> findByIsStateTrue();
 	
 	Boolean existsById(Long productId);
 	
@@ -22,12 +22,10 @@ public interface ProductDAO {
 
 	Page<Product> getActiveProductsPage(Pageable pageRequest);
 
-	List<Product> getProductsMatchingSearch(String search);
+	List<Product> findByIsStateTrueAndNameContaining(String search);
 
 	ProductSimplified getSimplifiedProductById(Long id);
 
 	boolean existsByName(String name);
-
-	//List<Product> findByHangar(Long id);
 
 }

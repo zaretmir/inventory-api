@@ -1,4 +1,4 @@
-package com.empresa.product.service;
+package com.app.products.service;
 
 import java.util.List;
 import java.util.Optional;
@@ -6,16 +6,16 @@ import java.util.Optional;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
-import com.empresa.exception.EntityNotFoundException;
-import com.empresa.product.model.Product;
+import com.app.base.exception.EntityNotFoundException;
+import com.app.base.product.model.Product;
 
 public interface ProductService {
 	
 	Product getProductById(Long productId) throws EntityNotFoundException;
 	
-	List<Product> getProducts();
+	List<Product> getActiveProducts();
 	
-	Product editProduct(Long id, Product product);
+	Product editProduct(Product product);
 	
 	List<Product> listProductsUpperCase();
 	
@@ -31,5 +31,5 @@ public interface ProductService {
 
 	Page<Product> getActiveProductsPage(Pageable pageRequest);
 
-	List<Product> getProductsMatchingSearch(String search);
+	List<Product> getActiveProductsMatchingSearch(String search);
 }

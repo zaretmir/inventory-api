@@ -1,24 +1,27 @@
-package com.empresa.product.builder;
+package com.app.products.builder;
 
-import com.empresa.product.dto.ProductDto;
-import com.empresa.product.model.Product;
+import com.app.base.product.model.Product;
+import com.app.products.dto.ProductDto;
 
 public class ProductBuilder {
 	
 	static public Product convertToEntity(ProductDto dto) {
-		Product product = new Product();
+		Product product = new Product();		
+		product.setId(dto.getId());
 		product.setName(dto.getName());
 		product.setDescription(dto.getDescription());
-		product.setIsState(dto.getIsState());
+		product.setState(dto.isState());
+		
 		return product;
 	}
 	
 	static public ProductDto convertToDto(Product product) {
-		ProductDto dto = new ProductDto();
+		ProductDto dto = new ProductDto();		
 		dto.setId(product.getId());
 		dto.setName(product.getName());
 		dto.setDescription(product.getDescription());
-		dto.setIsState(product.getIsState());
+		dto.setState(product.isState());
+		
 		return dto;
 	}
 

@@ -1,4 +1,4 @@
-package com.empresa.product.repository;
+package com.app.products.repository;
 
 import java.util.List;
 
@@ -9,8 +9,8 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
-import com.empresa.product.model.Product;
-import com.empresa.product.projection.ProductSimplified;
+import com.app.base.product.model.Product;
+import com.app.products.projection.ProductSimplified;
 
 @Repository
 public interface ProductRepository extends CrudRepository<Product, Long>{
