@@ -1,4 +1,4 @@
-package com.empresa.hangar.repository;
+package com.app.hangars.repository;
 
 import java.util.List;
 import java.util.Optional;
@@ -7,7 +7,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import com.empresa.hangar.model.Hangar;
+import com.app.base.hangar.model.Hangar;
 
 public interface HangarRepository extends JpaRepository<Hangar, Long> {
 	
@@ -15,11 +15,11 @@ public interface HangarRepository extends JpaRepository<Hangar, Long> {
 	
 	boolean existsHangarByName(String name);
 	
-	List<Hangar> findByIsStateTrue();
+	List<Hangar> findByIsActiveTrue();
 	
-	Page<Hangar> findByIsStateTrue(Pageable pageable); // Revisar import
+	Page<Hangar> findByIsActiveTrue(Pageable pageable); // Revisar import
 	
 	List<Hangar> findByNameContaining(String search);
 	
-	List<Hangar> findByIsStateTrueAndNameContaining(String search);
+	List<Hangar> findByIsActiveTrueAndNameContaining(String search);
 }

@@ -1,4 +1,4 @@
-package com.empresa.hangar.dao;
+package com.app.hangars.dao;
 
 import java.util.List;
 
@@ -7,8 +7,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
 
-import com.empresa.hangar.model.Hangar;
-import com.empresa.hangar.repository.HangarRepository;
+import com.app.base.hangar.model.Hangar;
+import com.app.hangars.repository.HangarRepository;
 
 @Component
 public class HangarDAOImp implements HangarDAO {
@@ -22,8 +22,8 @@ public class HangarDAOImp implements HangarDAO {
 	}
 	
 	@Override
-	public List<Hangar> getHangarsStateTrue() {
-		return hangarRepository.findByIsStateTrue();
+	public List<Hangar> findByIsStateTrue() {
+		return hangarRepository.findByIsActiveTrue();
 	}
 	
 	@Override
@@ -35,16 +35,8 @@ public class HangarDAOImp implements HangarDAO {
 		return hangarRepository.save(hangar);
 	}
 	
-	/*
 	@Override
-	public void addProductToHangar(Product product) {
-		Hangar hangar = hangarRepository.getOne(product.getHangar().getId());
-		hangarRepository.save(hangar);
-	}
-	*/
-	
-	@Override
-	public Hangar getHangarById(long id) {
+	public Hangar findById(long id) {
 		return hangarRepository.findById(id).get();
 	}
 	
@@ -60,12 +52,12 @@ public class HangarDAOImp implements HangarDAO {
 
 	@Override
 	public Page<Hangar> getActiveHangarsPage(Pageable pageRequest) {
-		return hangarRepository.findByIsStateTrue(pageRequest);
+		return hangarRepository.findByIsActiveTrue(pageRequest);
 	}
 
 	@Override
-	public List<Hangar> getProductsMatchingSearch(String search) {
-		return hangarRepository.findByIsStateTrueAndNameContaining(search);
+	public List<Hangar> findByIsStateTrueAndNameContaining(String search) {
+		return hangarRepository.findByIsActiveTrueAndNameContaining(search);
 	}
 
 }

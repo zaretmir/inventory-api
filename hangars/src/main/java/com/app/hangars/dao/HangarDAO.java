@@ -1,11 +1,11 @@
-package com.empresa.hangar.dao;
+package com.app.hangars.dao;
 
 import java.util.List;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
-import com.empresa.hangar.model.Hangar;
+import com.app.base.hangar.model.Hangar;
 
 public interface HangarDAO {
 	
@@ -13,9 +13,7 @@ public interface HangarDAO {
 	
 	Hangar getHangarById(Long hangarId);
 	
-	// void addProductToHangar(Product product);
-
-	Hangar getHangarById(long id);
+	Hangar findById(long id);
 	
 	Boolean existsById(long id);
 
@@ -23,10 +21,10 @@ public interface HangarDAO {
 
 	Hangar save(Hangar hangar);
 
-	List<Hangar> getHangarsStateTrue();
+	List<Hangar> findByIsStateTrue();
 
 	Page<Hangar> getActiveHangarsPage(Pageable pageRequest);
 
-	List<Hangar> getProductsMatchingSearch(String search);
+	List<Hangar> findByIsStateTrueAndNameContaining(String search);
 
 }

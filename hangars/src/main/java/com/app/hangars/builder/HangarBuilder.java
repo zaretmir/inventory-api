@@ -1,7 +1,7 @@
-package com.empresa.hangar.builder;
+package com.app.hangars.builder;
 
-import com.empresa.hangar.dto.HangarDto;
-import com.empresa.hangar.model.Hangar;
+import com.app.base.hangar.model.Hangar;
+import com.app.hangars.dto.HangarDto;
 
 public class HangarBuilder {
 	
@@ -14,7 +14,7 @@ public class HangarBuilder {
 		hangar.setOwner(dto.getOwner());
 		hangar.setOwnerEmail(dto.getOwnerEmail());
 		hangar.setPhoneNumber(dto.getPhoneNumber());
-		hangar.setIsState(dto.getIsState());
+		hangar.setActive(dto.isActive());
 		
 		
 		return hangar;		
@@ -28,7 +28,8 @@ public class HangarBuilder {
 		dto.setOwner(hangar.getOwner());
 		dto.setOwnerEmail(hangar.getOwnerEmail());
 		dto.setPhoneNumber(hangar.getPhoneNumber());
-		dto.setIsState(hangar.getIsState());
+		dto.setActive(hangar.isActive());
+		dto.setActive(hangar.isActive());
 		
 		return dto;
 	}
