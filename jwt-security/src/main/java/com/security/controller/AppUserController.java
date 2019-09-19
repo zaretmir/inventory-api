@@ -16,11 +16,10 @@ public class AppUserController {
 	
 	@Autowired
 	AppUserService userService;
-	
-	
+		
 	@RequestMapping(value = "/validate", params= { "username" } , method = RequestMethod.GET)
 	public ResponseEntity<?> isUser(@RequestParam("username") String username) {
-		return ResponseEntity.ok(userService.isUsernameTaken(username));
+		return ResponseEntity.ok(userService.existsUsername(username));
 	}
 
 }

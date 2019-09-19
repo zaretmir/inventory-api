@@ -1,6 +1,6 @@
 package com.security.builder;
 
-import com.empresa.app_user.model.AppUser;
+import com.app.base.app_user.model.AppUser;
 import com.security.dto.AppUserDTO;
 
 public class AppUserBuilder {

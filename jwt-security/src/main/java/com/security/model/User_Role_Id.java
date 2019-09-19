@@ -3,6 +3,10 @@ package com.security.model;
 import java.io.Serializable;
 import java.util.Objects;
 
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter @Setter
 public class User_Role_Id implements Serializable {
 
 	/**
@@ -13,22 +17,6 @@ public class User_Role_Id implements Serializable {
 	private Long userpk;
 	
 	private Long rolepk;
-
-	public Long getUserpk() {
-		return userpk;
-	}
-
-	public void setUserpk(Long userpk) {
-		this.userpk = userpk;
-	}
-
-	public Long getRolepk() {
-		return rolepk;
-	}
-
-	public void setRolepk(Long rolepk) {
-		this.rolepk = rolepk;
-	}
 	
 	@Override
 	public boolean equals(Object o) {

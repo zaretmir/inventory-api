@@ -3,7 +3,7 @@ package com.security.dao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.empresa.app_user.model.AppUser;
+import com.app.base.app_user.model.AppUser;
 import com.security.repository.UserRepository;
 
 @Component

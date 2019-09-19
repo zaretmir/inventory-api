@@ -1,6 +1,6 @@
 package com.security.dao;
 
-import com.empresa.app_user.model.AppUser;
+import com.app.base.app_user.model.AppUser;
 
 public interface AppUserDAO {
 	

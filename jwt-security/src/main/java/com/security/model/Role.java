@@ -7,8 +7,12 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import lombok.Getter;
+import lombok.Setter;
+
 @Entity
 @Table(name="role", schema="db_security")
+@Getter @Setter
 public class Role {
 	
 	@Id
@@ -17,43 +21,6 @@ public class Role {
 	private Long id;
 	
 	@Column(name="role")
-	private String rolename;
-	
-	/*
-	@ManyToMany(mappedBy="roles")
-	private List<AppUser> users;
-	*/
-	
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
-
-	public String getRolename() {
-		return rolename;
-	}
-
-	public void setRolename(String rolename) {
-		this.rolename = rolename;
-	}
-	
-	/*
-	public List<AppUser> getUsers() {
-		return users;
-	}
-
-	public void setUsers(List<AppUser> users) {
-		this.users = users;
-	}
-	*/
-
-	
-
-	
-	
-	
+	private String rolename;	
 
 }
