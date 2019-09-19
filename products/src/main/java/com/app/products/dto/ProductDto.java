@@ -15,6 +15,6 @@ public class ProductDto {
 	
 	private String description;
 	
-	private boolean isState;
+	private boolean isActive;
 
 }

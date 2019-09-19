@@ -16,13 +16,13 @@ import com.app.products.projection.ProductSimplified;
 public interface ProductRepository extends CrudRepository<Product, Long>{
 
 	//List<Product> findByHangar(Hangar hangar);
-	List<Product> findByIsStateTrue();
+	List<Product> findByIsActiveTrue();
 	
-	Page<Product> findByIsStateTrue(Pageable pageable);
+	Page<Product> findByIsActiveTrue(Pageable pageable);
 	
 	List<Product> findByNameContaining(String searchText);
 	
-	List<Product> findByIsStateTrueAndNameContaining(String searchText);
+	List<Product> findByIsActiveTrueAndNameContaining(String searchText);
 	
 	@Query(value = "SELECT p.product_id, p.name FROM product p WHERE p.product_id = :id", nativeQuery = true)
 	Product getSimplifiedProductById(@Param("id") Long id);

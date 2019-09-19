@@ -16,7 +16,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.app.base.exception.ApplicationException;
-import com.app.base.exception.EntityNotFoundException;
 import com.app.base.product.model.Product;
 import com.app.products.dao.ProductDAO;
 import com.app.products.exception.ProductExceptionCause;
@@ -51,7 +50,7 @@ public class ProductServiceImp implements ProductService {
 		Page<Product> products = productDAO.getActiveProductsPage(pageRequest);
 		
 		if (products.getContent() == null || products.getContent().isEmpty())
-			throw new EntityNotFoundException(Product.class);
+			throw new ApplicationException(ProductExceptionCause.NOT_FOUND_ACTIVE);
 		
 		return products;
 	}
@@ -88,7 +87,7 @@ public class ProductServiceImp implements ProductService {
 	public Product deleteProduct(Long id) {
 		Product product = productDAO.findById(id);
 		if (product == null)
-			throw new EntityNotFoundException(Product.class);
+			throw new ApplicationException(ProductExceptionCause.NOT_FOUND);
 		
 		return productDAO.delete(product);		
 	}

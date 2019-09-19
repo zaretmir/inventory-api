@@ -24,7 +24,7 @@ public class ProductDAOImp implements ProductDAO {
 	
 	@Override
 	public List<Product> findByIsStateTrue() {
-		return productRepository.findByIsStateTrue();
+		return productRepository.findByIsActiveTrue();
 	}
 	
 	@Override
@@ -39,18 +39,18 @@ public class ProductDAOImp implements ProductDAO {
 	
 	@Override
 	public Product delete(Product product) {
-		product.setState(false);
+		product.setActive(false);
 		return productRepository.save(product);
 	}
 
 	@Override
 	public Page<Product> getActiveProductsPage(Pageable pageRequest) {
-		return productRepository.findByIsStateTrue(pageRequest);
+		return productRepository.findByIsActiveTrue(pageRequest);
 	}
 
 	@Override
 	public List<Product> findByIsStateTrueAndNameContaining(String search) {
-		return productRepository.findByIsStateTrueAndNameContaining(search);
+		return productRepository.findByIsActiveTrueAndNameContaining(search);
 	}
 
 	@Override

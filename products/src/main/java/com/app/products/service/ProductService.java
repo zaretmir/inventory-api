@@ -6,12 +6,11 @@ import java.util.Optional;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
-import com.app.base.exception.EntityNotFoundException;
 import com.app.base.product.model.Product;
 
 public interface ProductService {
 	
-	Product getProductById(Long productId) throws EntityNotFoundException;
+	Product getProductById(Long productId);
 	
 	List<Product> getActiveProducts();
 	
@@ -22,8 +21,6 @@ public interface ProductService {
 	Optional<Product> listProductsLongestName();
 	
 	List<Product> listProductsByFirstLetter(char letter);
-
-	//List<Product> getByHangar(Long id);
 
 	Product createProduct(Product product);
 

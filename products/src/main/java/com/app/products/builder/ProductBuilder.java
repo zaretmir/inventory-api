@@ -10,7 +10,7 @@ public class ProductBuilder {
 		product.setId(dto.getId());
 		product.setName(dto.getName());
 		product.setDescription(dto.getDescription());
-		product.setState(dto.isState());
+		product.setActive(dto.isActive());
 		
 		return product;
 	}
@@ -20,7 +20,7 @@ public class ProductBuilder {
 		dto.setId(product.getId());
 		dto.setName(product.getName());
 		dto.setDescription(product.getDescription());
-		dto.setState(product.isState());
+		dto.setActive(product.isActive());
 		
 		return dto;
 	}
