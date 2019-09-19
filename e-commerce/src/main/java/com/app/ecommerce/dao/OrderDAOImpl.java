@@ -1,4 +1,4 @@
-package com.empresa.ecommerce.dao;
+package com.app.ecommerce.dao;
 
 import java.util.List;
 
@@ -7,8 +7,8 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.empresa.ecommerce.model.Order;
-import com.empresa.ecommerce.repository.OrderRepository;
+import com.app.ecommerce.model.Order;
+import com.app.ecommerce.repository.OrderRepository;
 
 @Component
 public class OrderDAOImpl implements OrderDAO {

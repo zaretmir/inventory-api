@@ -1,10 +1,10 @@
-package com.empresa.ecommerce.dto;
+package com.app.ecommerce.dto;
 
 import java.util.Date;
 import java.util.List;
 
-import com.empresa.app_user.model.AppUser;
-import com.empresa.ecommerce.model.OrderItem;
+import com.app.base.app_user.model.AppUser;
+import com.app.ecommerce.model.OrderItem;
 
 import lombok.Getter;
 import lombok.Setter;

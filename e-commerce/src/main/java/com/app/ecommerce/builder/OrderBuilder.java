@@ -1,7 +1,7 @@
-package com.empresa.ecommerce.builder;
+package com.app.ecommerce.builder;
 
-import com.empresa.ecommerce.dto.OrderDto;
-import com.empresa.ecommerce.model.Order;
+import com.app.ecommerce.dto.OrderDto;
+import com.app.ecommerce.model.Order;
 
 public class OrderBuilder {
 	

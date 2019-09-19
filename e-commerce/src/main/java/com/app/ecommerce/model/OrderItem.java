@@ -1,4 +1,4 @@
-package com.empresa.ecommerce.model;
+package com.app.ecommerce.model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -7,7 +7,8 @@ import javax.persistence.IdClass;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-import com.empresa.product_hangar.model.Product_Hangar;
+import com.app.masterdata.product_hangar.model.Product_Hangar;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -19,25 +20,26 @@ import lombok.Setter;
 public class OrderItem {
 
 	@Id
-	@Column(name = "orderPk")
-	private Long orderPk;
+	@ManyToOne // Required due to IdClass
+	@JsonIgnore
+	private Order order;
 	
 	@Id	
 	@ManyToOne
 	private Product_Hangar itemOrigin;
 	
-	@Column(name = "qtyOrdered")
+	@Column(name = "qty_ordered")
 	private int orderedQuantity;
 	
 	public OrderItem() { }
 	
-	public OrderItem(Long orderPk, Product_Hangar itemOrigin) {
-		this.orderPk = orderPk;
+	public OrderItem(Order order, Product_Hangar itemOrigin) {
+		this.order = order;
 		this.itemOrigin = itemOrigin;
 	}
 	
-	public OrderItem(Long orderPk, Product_Hangar itemOrigin, int orderedQuantity) {
-		this.orderPk = orderPk;
+	public OrderItem(Order order, Product_Hangar itemOrigin, int orderedQuantity) {
+		this.order = order;
 		this.itemOrigin = itemOrigin;
 		this.orderedQuantity = orderedQuantity;
 	}

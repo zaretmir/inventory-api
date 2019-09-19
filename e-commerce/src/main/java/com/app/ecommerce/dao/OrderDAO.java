@@ -1,10 +1,10 @@
-package com.empresa.ecommerce.dao;
+package com.app.ecommerce.dao;
 
 import java.util.List;
 
 import javax.validation.Valid;
 
-import com.empresa.ecommerce.model.Order;
+import com.app.ecommerce.model.Order;
 
 public interface OrderDAO {
 

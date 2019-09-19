@@ -1,4 +1,4 @@
-package com.empresa.ecommerce.service;
+package com.app.ecommerce.service;
 
 import java.util.List;
 
@@ -7,15 +7,14 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.empresa.ecommerce.dao.OrderDAO;
-import com.empresa.ecommerce.model.Order;
-import com.empresa.ecommerce.model.OrderItem;
-import com.empresa.exception.ApplicationException;
-import com.empresa.exception.ApplicationExceptionCause;
-import com.empresa.exception.EntityNotFoundException;
-import com.empresa.price.service.PriceService;
-import com.empresa.product_hangar.model.Product_Hangar;
-import com.empresa.product_hangar.service.Product_HangarService;
+import com.app.base.exception.ApplicationException;
+import com.app.ecommerce.dao.OrderDAO;
+import com.app.ecommerce.exception.OrderExceptionCause;
+import com.app.ecommerce.model.Order;
+import com.app.ecommerce.model.OrderItem;
+import com.app.masterdata.price.service.PriceService;
+import com.app.masterdata.product_hangar.model.Product_Hangar;
+import com.app.masterdata.product_hangar.service.Product_HangarService;
 
 @Service
 public class OrderServiceImpl implements OrderService {
@@ -40,10 +39,11 @@ public class OrderServiceImpl implements OrderService {
 	
 	@Override
 	public Order getOrderById(Long id) {
-		if (!orderDAO.existsById(id))
-			throw new EntityNotFoundException(Order.class);
+		Order order = orderDAO.getOrderById(id);
+		if (orderDAO.getOrderById(id) == null)
+			throw new ApplicationException(OrderExceptionCause.ORDER_NOT_FOUND);
 		
-		return this.updateOrderTotals(orderDAO.getOrderById(id));
+		return order;
 	}
 	
 	@Override
@@ -52,26 +52,38 @@ public class OrderServiceImpl implements OrderService {
 	}
 	
 	@Override
-	public Order addItem(Order order, OrderItem requestedItem) {
+	public Order addItem(OrderItem requestedItem) { // TODO, Refactor for atomicity /!\
+		Order order = this.getOrderById(requestedItem.getOrder().getId());
+		Product_Hangar itemOrigin = stockService.getStockEntry(
+				requestedItem.getItemOrigin().getHangarPk(),
+				requestedItem.getItemOrigin().getProductPk());
+		
+		requestedItem.setItemOrigin(itemOrigin);
+		
 		if (requestedItem.getItemOrigin().getQuantity() < requestedItem.getOrderedQuantity())
-			throw new ApplicationException(ApplicationExceptionCause.NO_STOCK);
+			throw new ApplicationException(OrderExceptionCause.NOT_ENOUGH_STOCK);
 		
 		try {
-			updateExistentItem(requestedItem);			
+			updateExistentItem(requestedItem);
 		}
-		catch (EntityNotFoundException ex) { // The product was not yet in the order
-			addItemAsNew(order, requestedItem);
-		}		
+		catch (ApplicationException ex) { // The product was not yet in the order
+			if (OrderExceptionCause.ITEM_NOT_FOUND.getCode().equals(ex.getMessage())) { // ¡Orden evita null pointer!!!
+				addItemAsNew(order, requestedItem);
+			}
+			else {
+				throw ex; // Ver error si falla bbdd con breakpoint y editar para user
+			}
+		}
 		
 		updateStockQuantity(requestedItem.getItemOrigin(), requestedItem.getOrderedQuantity());
 		updateOrderTotals(order);
+		
 		
 		return orderDAO.saveOrder(order);
 	}
 	
 	private void updateExistentItem(OrderItem requestedItem) {
-		//OrderItem item = itemService.getOrderItem(requestedItem.getOrderPk(), requestedItem.getProductPk());
-		OrderItem item = itemService.getOrderItem(requestedItem.getOrderPk(), requestedItem.getItemOrigin());
+		OrderItem item = itemService.getOrderItem(requestedItem.getOrder(), requestedItem.getItemOrigin());
 		
 		int newQuantity = item.getOrderedQuantity() + requestedItem.getOrderedQuantity();
 		item.setOrderedQuantity(newQuantity);
@@ -86,7 +98,7 @@ public class OrderServiceImpl implements OrderService {
 	private void updateStockQuantity(Product_Hangar stockEntry, int quantityRequested) {
 		int quantityRemaining =  stockEntry.getQuantity() - quantityRequested;
 		stockEntry.setQuantity(quantityRemaining);
-		stockService.updateEntry(stockEntry);
+		stockService.updateStockEntry(stockEntry);
 	}
 	
 	private Order updateOrderTotals(Order order) {
@@ -108,10 +120,9 @@ public class OrderServiceImpl implements OrderService {
 	
 	private Order updateTotalAmount(Order order) {
 		double totalAmount = order.getOrderItems().stream()
-				.mapToDouble( product -> {
-					Long productId = product.getItemOrigin().getProductPk();
-					double productPrice = priceService.getLatestEntryByProductId(productId).getPrice();
-					int productQty = product.getOrderedQuantity();
+				.mapToDouble( item -> {
+					double productPrice = priceService.getLatestPrice(item.getItemOrigin()).getPrice();
+					int productQty = item.getOrderedQuantity();
 
 					return productPrice * productQty;
 				})
