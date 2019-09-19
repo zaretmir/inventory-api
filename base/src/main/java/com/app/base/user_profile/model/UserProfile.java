@@ -1,4 +1,4 @@
-package com.empresa.user_profile.model;
+package com.app.base.user_profile.model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -10,10 +10,8 @@ import javax.persistence.MapsId;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
-import com.empresa.app_user.model.AppUser;
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.app.base.app_user.model.AppUser;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -31,7 +29,7 @@ public class UserProfile {
 	
 	@OneToOne(fetch = FetchType.EAGER)
 	@MapsId
-	private AppUser userApp;
+	private AppUser user;
 	
 	@Column(name = "first_name")
 	private String name;
@@ -47,9 +45,9 @@ public class UserProfile {
 	
 	public UserProfile() {}
 
-    public UserProfile(AppUser userApp) {
-        this.userApp = userApp;
-        userApp.setUserProfile(this);
+    public UserProfile(AppUser user) {
+        this.user = user;
+        user.setUserProfile(this);
     }
 
 }

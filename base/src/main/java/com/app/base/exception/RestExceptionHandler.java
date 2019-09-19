@@ -1,4 +1,4 @@
-package com.empresa.exception;
+package com.app.base.exception;
 
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
@@ -16,18 +16,11 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 @ControllerAdvice
 public class RestExceptionHandler extends ResponseEntityExceptionHandler {
 	
-	@ExceptionHandler(EntityNotFoundException.class)
-	protected ResponseEntity<Object> handleEntityNotFound(EntityNotFoundException ex) {
-		ApiError apiError = new ApiError(HttpStatus.NOT_FOUND);
-		apiError.setMessage(ex.getMessage());
-		return buildResponseEntity(apiError);
-	}
-	
 	@ExceptionHandler(ApplicationException.class)
 	protected ResponseEntity<Object> handleApplicationException(ApplicationException ex) {
 		ApiError apiError = new ApiError();
 		apiError.setMessage(ex.getMessage());
-		apiError.setStatus(ex.getStatus());
+		apiError.setStatus(ex.getHttpStatus());
 		return buildResponseEntity(apiError);
 	}
 	
@@ -42,17 +35,7 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
 		apiError.addValidationErrors(ex.getBindingResult().getFieldErrors());
 		
 		return buildResponseEntity(apiError);		
-	}
-	
-	
-	@ExceptionHandler(EntityNotUniqueException.class)
-	protected ResponseEntity<Object> handleEntityNotUnique(EntityNotUniqueException ex) {
-		ApiError apiError = new ApiError(HttpStatus.BAD_REQUEST);
-		apiError.setMessage(ex.getMessage());
-		
-		return buildResponseEntity(apiError);
-	}
-	
+	}	
 	
 	@Override
 	protected ResponseEntity<Object> handleHttpMessageNotReadable(

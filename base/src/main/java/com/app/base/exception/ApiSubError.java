@@ -1,4 +1,4 @@
-package com.empresa.exception;
+package com.app.base.exception;
 
 abstract class ApiSubError {
 
