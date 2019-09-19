@@ -8,6 +8,7 @@ import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.stereotype.Component;
 
 import com.app.masterdata.product_hangar.model.Product_Hangar;
+import com.app.masterdata.product_hangar.projection.StockLatestPrice;
 import com.app.masterdata.product_hangar.repository.Product_HangarRepository;
 import com.app.products.dao.ProductDAO;
 import com.app.products.projection.ProductSimplified;
@@ -44,6 +45,11 @@ public class Product_HangarDAOImp implements Product_HangarDAO {
 	@Override
 	public Product_Hangar getStock(Long hangarId, Long productId) {
 		return product_HangarRepository.findByHangarPkAndProductPk(hangarId, productId);
+	}
+	
+	@Override
+	public List<StockLatestPrice> getStockProjectedByProduct(Long productId) {
+		return product_HangarRepository.findProduct_HangarProjectedForLimitedDataByProductPk(productId);
 	}
 
 	@Override

@@ -5,7 +5,8 @@ import org.springframework.http.HttpStatus;
 import com.app.base.exception.ApplicationExceptionCause;
 
 public enum StockExceptionCause implements ApplicationExceptionCause {
-	NOT_FOUND("No stock entries found for your request", HttpStatus.NOT_FOUND);
+	NOT_FOUND("No stock entries found for your request", HttpStatus.NOT_FOUND),
+	NOT_FOUND_VALID("No stock entries with a valid price found", HttpStatus.NOT_FOUND);
 	
 	private String code;
 	private HttpStatus httpStatus;

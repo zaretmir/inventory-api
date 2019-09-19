@@ -11,13 +11,9 @@ import com.app.masterdata.product_hangar.model.Product_Hangar;
 @Repository
 public interface PriceRepository extends JpaRepository<Price, Long>{
 	
-	//List<Price> findByProductOrderByDateUpdatedDesc(Product product);
-	List<Price> findByProductHangarOrderByDateUpdatedDesc(Product_Hangar productHangar);
+	List<Price> findByStockEntryOrderByDateUpdatedDesc(Product_Hangar stockEntry);
 	
-	//Price findTopByProductOrderByDateUpdatedDesc(Product product);
-	Price findTopByProductHangarOrderByDateUpdatedDesc(Product_Hangar productHangar);
+	Price findTopByStockEntryOrderByDateUpdatedDesc(Product_Hangar stockEntry);
 	
-	//void deleteByProduct(Product product);
-	void deleteByProductHangar(Product_Hangar productHangar);
-
+	void deleteByStockEntry(Product_Hangar stockEntry);
 }

@@ -3,6 +3,7 @@ package com.app.masterdata.product_hangar.service;
 import java.util.List;
 
 import com.app.masterdata.product_hangar.model.Product_Hangar;
+import com.app.masterdata.product_hangar.projection.StockLatestPrice;
 import com.app.products.projection.ProductSimplified;
 
 public interface Product_HangarService {
@@ -22,5 +23,7 @@ public interface Product_HangarService {
 
 
 	Product_Hangar updateStockEntry(Long hangarId, Long productId, int updatedQty);
+
+	List<StockLatestPrice> getStockEntriesProjected(Long productId);
 
 }

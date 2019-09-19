@@ -10,6 +10,8 @@ import com.app.base.exception.ApplicationException;
 import com.app.masterdata.product_hangar.dao.Product_HangarDAO;
 import com.app.masterdata.product_hangar.exception.StockExceptionCause;
 import com.app.masterdata.product_hangar.model.Product_Hangar;
+import com.app.masterdata.product_hangar.projection.StockLatestPrice;
+import com.app.masterdata.product_hangar.repository.Product_HangarRepository;
 import com.app.products.projection.ProductSimplified;
 import com.app.products.service.ProductService;
 
@@ -21,6 +23,9 @@ public class Product_HangarServiceImp implements Product_HangarService{
 	
 	@Autowired
 	ProductService productService;
+	
+	@Autowired
+	Product_HangarRepository stockRepository;
 
 	@Override
 	public Product_Hangar save(Product_Hangar entry) {
@@ -59,6 +64,19 @@ public class Product_HangarServiceImp implements Product_HangarService{
 			throw new ApplicationException(StockExceptionCause.NOT_FOUND);
 		
 		return productsExcerpt;
+	}
+	
+	@Override
+	public List<StockLatestPrice> getStockEntriesProjected(Long productId) { //Only returns StockLatestsPrice(s) which prices has been set
+		List<StockLatestPrice> stockEntries = product_HangarDAO.getStockProjectedByProduct(productId);
+		List<StockLatestPrice> stockEntriesWithPrice = stockEntries.stream()
+				.filter(entry -> entry.getLatestPrice() != null)
+				.collect(Collectors.toList());
+		
+		if (stockEntriesWithPrice == null || stockEntriesWithPrice.isEmpty())
+			throw new ApplicationException(StockExceptionCause.NOT_FOUND_VALID);
+		
+		return stockEntriesWithPrice;
 	}
 
 	@Override

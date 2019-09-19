@@ -33,12 +33,12 @@ public class PriceDAOImp implements PriceDAO {
 	
 	@Override
 	public Price getLatestPrice(Product_Hangar stockEntry) {
-		return priceRepository.findTopByProductHangarOrderByDateUpdatedDesc(stockEntry);
+		return priceRepository.findTopByStockEntryOrderByDateUpdatedDesc(stockEntry);
 	}
 
 	@Override
 	public List<Price> getPriceHistory(Product_Hangar stockEntry) {
-		return priceRepository.findByProductHangarOrderByDateUpdatedDesc(stockEntry);
+		return priceRepository.findByStockEntryOrderByDateUpdatedDesc(stockEntry);
 	}
 
 	@Override
@@ -49,7 +49,7 @@ public class PriceDAOImp implements PriceDAO {
 	@Override
 	@Transactional
 	public void deleteByProductHangar(Product_Hangar stockEntry) {
-		priceRepository.deleteByProductHangar(stockEntry);
+		priceRepository.deleteByStockEntry(stockEntry);
 	}
 
 }

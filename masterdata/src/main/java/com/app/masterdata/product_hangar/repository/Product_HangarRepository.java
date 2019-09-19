@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import com.app.masterdata.product_hangar.model.Product_Hangar;
+import com.app.masterdata.product_hangar.projection.StockLatestPrice;
 
 @Repository
 public interface Product_HangarRepository  extends JpaRepository<Product_Hangar, Long>{
@@ -18,6 +19,9 @@ public interface Product_HangarRepository  extends JpaRepository<Product_Hangar,
 	@Query(value = "SELECT ph.qty FROM product_hangar ph WHERE ph.productpk = :id", nativeQuery = true)
 	Integer findQtyphByProductPk(Long id);
 
-	Product_Hangar findByHangarPkAndProductPk(Long hangarId, Long productId);	
-
+	Product_Hangar findByHangarPkAndProductPk(Long hangarId, Long productId);
+	
+	StockLatestPrice findProduct_HangarProjectedForLimitedDataByHangarPkAndProductPk(Long hangarId, Long productId);
+	
+	List<StockLatestPrice> findProduct_HangarProjectedForLimitedDataByProductPk(Long productId);
 }
