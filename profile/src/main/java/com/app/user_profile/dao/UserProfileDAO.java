@@ -1,6 +1,6 @@
-package com.empresa.user_profile.dao;
+package com.app.user_profile.dao;
 
-import com.empresa.user_profile.model.UserProfile;
+import com.app.base.user_profile.model.UserProfile;
 
 public interface UserProfileDAO {
 

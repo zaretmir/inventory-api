@@ -11,14 +11,15 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.security.config.JwtTokenUtil;
+import com.app.base.app_user.model.AppUser;
+import com.security.builder.AppUserBuilder;
 import com.security.dto.AppUserDTO;
 import com.security.model.JwtRequest;
 import com.security.model.JwtResponse;
 import com.security.repository.UserRepository;
+import com.security.service.AppUserService;
 import com.security.service.JwtUserDetailsService;
 
 
@@ -30,10 +31,10 @@ public class SecurityController {
 	private AuthenticationManager authenticationManager;
 
 	@Autowired
-	private JwtTokenUtil jwtTokenUtil;
-
-	@Autowired
 	private JwtUserDetailsService userDetailsService;
+	
+	@Autowired
+	AppUserService userService;
 	
 	@Autowired
 	UserRepository userRepo;
@@ -45,13 +46,17 @@ public class SecurityController {
 
 		final UserDetails userDetails = userDetailsService.loadUserByUsername(authenticationRequest.getUsername());
 
-		final String token = jwtTokenUtil.generateToken(userDetails);
+		final String token = userDetailsService.generateToken(userDetails);
 
 		return ResponseEntity.ok(new JwtResponse(token));
 	}
+	
 
 	@RequestMapping(value = "/register", method = RequestMethod.POST)
-	public ResponseEntity<?> saveUser(@RequestBody AppUserDTO user) throws Exception {
+	public ResponseEntity<?> saveUser(@RequestBody AppUserDTO dto) throws Exception {
+		
+		AppUser user = AppUserBuilder.convertToEntity(dto);
+		
 		return ResponseEntity.ok(userDetailsService.save(user));
 	}
 	

@@ -12,14 +12,13 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.empresa.app_user.model.AppUser;
-import com.empresa.exception.EntityNotFoundException;
-import com.empresa.user_profile.builder.UserProfileBuilder;
-import com.empresa.user_profile.dto.UserProfileDto;
-import com.empresa.user_profile.model.UserProfile;
-import com.empresa.user_profile.service.UserProfileService;
-import com.security.config.JwtTokenUtil;
+import com.app.base.app_user.model.AppUser;
+import com.app.base.user_profile.model.UserProfile;
+import com.app.user_profile.builder.UserProfileBuilder;
+import com.app.user_profile.dto.UserProfileDto;
+import com.app.user_profile.service.UserProfileService;
 import com.security.service.AppUserService;
+import com.security.service.JwtUserDetailsService;
 
 @Controller
 @RequestMapping("/api/user-management/")
@@ -33,63 +32,58 @@ public class ProfileController {
 	AppUserService userService;
 	
 	@Autowired
-	JwtTokenUtil tokenUtil;
+	JwtUserDetailsService detailsService;
 	
 	
-	@PutMapping("users/{id}")
-	public ResponseEntity<UserProfileDto> updateUserProfile(@PathVariable Long id, @RequestBody UserProfileDto profileReq) {
+	@PutMapping("users")
+	public ResponseEntity<UserProfileDto> saveLoggedUserProfile(@RequestHeader(name="Authorization") String token, @RequestBody UserProfileDto profileReq) {
 		
-		if (!userService.isUser(id))
-			throw new EntityNotFoundException(AppUser.class);
+		Long loggedUserId = this.getLoggedUserId(token); // Logged user modifies only its own profile		
 		
-		AppUser user = userService.getUserById(id);
+		UserProfile profile = UserProfileBuilder.convertToEntity(profileReq);
+		UserProfile saved = profileService.saveProfileData(loggedUserId, profile);
+		UserProfileDto profileRes = UserProfileBuilder.convertToDto(saved);
+		
+		return new ResponseEntity<UserProfileDto>(profileRes, HttpStatus.OK);
+	}
+	
+	
+	@PutMapping("users/{id}") //TODO: Autorizar solo al admin a este método
+	public ResponseEntity<UserProfileDto> saveUserProfile(@PathVariable Long id, @RequestBody UserProfileDto profileReq) {
 		
 		UserProfile profile = UserProfileBuilder.convertToEntity(profileReq);
 		UserProfile saved = profileService.saveProfileData(id, profile);
 		UserProfileDto profileRes = UserProfileBuilder.convertToDto(saved);
 		
-		
-		/*
-		AppUser user = userService.getUserById(id);
-		UserProfile profile = UserProfileBuilder.convertToEntity(profileReq);
-		user.setUserProfile(profile);
-		
-		UserProfileDto profileRes = UserProfileBuilder.convertToDto(user.getUserProfile());
-		*/
-		
 		return new ResponseEntity<UserProfileDto>(profileRes, HttpStatus.OK);
 	}
 	
-	@GetMapping("users/{id}")
-	public ResponseEntity<UserProfileDto> getUserprofile(
-			@PathVariable("id") Long id,
-			@RequestHeader(name="Authorization") String token) {
+	
+	@GetMapping("users")
+	public ResponseEntity<UserProfileDto> getUserprofile(@RequestHeader(name="Authorization") String token) {
 		
-		System.out.println(token);
-		token = token.replace("Bearer ", "");
-		System.out.println(token);
-		System.out.println(tokenUtil.getUsernameFromToken(token));
+		Long loggedUserId = this.getLoggedUserId(token);
 		
-		if (!userService.isUser(id))
-			throw new EntityNotFoundException(AppUser.class);
-		if (!profileService.existsProfile(id))
-			throw new EntityNotFoundException(UserProfile.class);
-		
-		UserProfile req = profileService.retrieveProfileDataById(id);
+		UserProfile req = profileService.getProfileById(loggedUserId);
 		UserProfileDto reqDto = UserProfileBuilder.convertToDto(req);
 		
 		return new ResponseEntity<UserProfileDto>(reqDto, HttpStatus.OK);		
 	}
 	
-	@GetMapping("users-auth/{id}")
+	
+	@GetMapping("users-auth/{id}") //TODO: Autorizar solo al admin a este método
 	public ResponseEntity<AppUser> getUser(@PathVariable("id") Long id) {
-		
-		if (!userService.isUser(id))
-			throw new EntityNotFoundException(AppUser.class);
-		
 		AppUser req = userService.getUserById(id);
 		
 		return new ResponseEntity<AppUser>(req, HttpStatus.OK);		
+	}
+	
+	
+	private Long getLoggedUserId(String token) {
+		String username = detailsService.getUsernameFromToken(token);
+		Long loggedUserId = userService.getByUsername(username).getId();
+		
+		return loggedUserId;		
 	}
 	
 

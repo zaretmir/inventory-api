@@ -1,20 +1,23 @@
 package com.empresa;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.empresa.price.model.Price;
-import com.empresa.price.service.PriceService;
-import com.empresa.product.service.ProductService;
+import com.app.masterdata.price.builder.PriceBuilder;
+import com.app.masterdata.price.dto.PriceDto;
+import com.app.masterdata.price.model.Price;
+import com.app.masterdata.price.service.PriceService;
+import com.app.masterdata.product_hangar.model.Product_Hangar;
+import com.app.masterdata.product_hangar.service.Product_HangarService;
 
 @RestController
 @RequestMapping("/api/price-management")
@@ -25,22 +28,27 @@ public class PriceController {
 	PriceService priceService;
 	
 	@Autowired
-	ProductService productService;
-	
-	@PostMapping("/entries/products/{product-id}")
-	public Price createPriceEntry(@RequestBody Price price, @PathVariable("product-id") Long id) {
-		return priceService.createPriceEntry(price, id);
+	Product_HangarService product_HangarService;
+
+	@PutMapping("/entries")
+	public Price createPriceEntry(@RequestBody PriceDto priceReq) {
+		priceReq.setDateUpdated(new Date(System.currentTimeMillis()).getTime());
+		
+		Price price = PriceBuilder.convertToEntity(priceReq);
+		
+		return priceService.createPriceEntry(price);
 	}
 	
-	@GetMapping("/entries/products/{product-id}")
-	public List<Price> getEntriesByProductId(@PathVariable("product-id") Long id) {
-		return priceService.getEntriesByProductId(id);		
+	@GetMapping("/entries/{hangar-id}/{product-id}") 
+	public List<Price> getAllEntries(
+			@PathVariable(name = "hanga-id") Long hangarId,
+			@PathVariable(name = "product-id") Long productId) {
+		
+		Product_Hangar productHangar = product_HangarService.getStockEntry(hangarId, productId);
+		return priceService.getPriceHistory(productHangar);
 	}
 	
-	@GetMapping("/entries") 
-	public List<Price> getAllEntries() {
-		return priceService.getAllEntries();
-	}
+	/*
 	
 	@DeleteMapping("/entries/products/{product-id}")
 	public void deleteByProductId(@PathVariable("product-id") Long id) {
@@ -51,6 +59,8 @@ public class PriceController {
 	public void deletePrice(@PathVariable("entry-id") Long id) {
 		priceService.deleteById(id);
 	}
+	
+	*/
 	
 	
 	

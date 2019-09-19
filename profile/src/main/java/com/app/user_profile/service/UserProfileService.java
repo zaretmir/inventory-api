@@ -1,11 +1,11 @@
-package com.empresa.user_profile.service;
+package com.app.user_profile.service;
 
-import com.empresa.user_profile.model.UserProfile;
+import com.app.base.user_profile.model.UserProfile;
 
 public interface UserProfileService {
 
 
-	UserProfile retrieveProfileDataById(Long id);
+	UserProfile getProfileById(Long id);
 
 	UserProfile saveProfileData(Long userId, UserProfile profile);
 

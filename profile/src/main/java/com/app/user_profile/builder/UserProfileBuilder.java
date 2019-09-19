@@ -1,7 +1,7 @@
-package com.empresa.user_profile.builder;
+package com.app.user_profile.builder;
 
-import com.empresa.user_profile.dto.UserProfileDto;
-import com.empresa.user_profile.model.UserProfile;
+import com.app.base.user_profile.model.UserProfile;
+import com.app.user_profile.dto.UserProfileDto;
 
 public class UserProfileBuilder {
 	
@@ -9,7 +9,7 @@ public class UserProfileBuilder {
 		UserProfileDto dto = new UserProfileDto();
 		
 		dto.setId(entity.getId());
-		dto.setUser(entity.getUserApp());
+		dto.setUser(entity.getUser());
 		dto.setName(entity.getName());
 		dto.setSurname(entity.getSurname());
 		dto.setAddress(entity.getAddress());
@@ -22,7 +22,7 @@ public class UserProfileBuilder {
 		UserProfile entity = new UserProfile();
 		
 		entity.setId(dto.getId());
-		entity.setUserApp(dto.getUser());
+		entity.setUser(dto.getUser());
 		entity.setName(dto.getName());
 		entity.setSurname(dto.getSurname());
 		entity.setAddress(dto.getAddress());

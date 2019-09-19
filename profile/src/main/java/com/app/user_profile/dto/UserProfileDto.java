@@ -1,6 +1,6 @@
-package com.empresa.user_profile.dto;
+package com.app.user_profile.dto;
 
-import com.empresa.app_user.model.AppUser;
+import com.app.base.app_user.model.AppUser;
 
 import lombok.Getter;
 import lombok.Setter;

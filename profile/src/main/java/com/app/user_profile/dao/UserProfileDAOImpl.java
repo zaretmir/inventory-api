@@ -1,10 +1,10 @@
-package com.empresa.user_profile.dao;
+package com.app.user_profile.dao;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.empresa.user_profile.model.UserProfile;
-import com.empresa.user_profile.repository.UserProfileRepository;
+import com.app.base.user_profile.model.UserProfile;
+import com.app.user_profile.repository.UserProfileRepository;
 import com.security.dao.AppUserDAO;
 
 @Component
