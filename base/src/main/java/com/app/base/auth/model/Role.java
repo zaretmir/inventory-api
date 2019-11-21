@@ -1,4 +1,4 @@
-package com.security.model;
+package com.app.base.auth.model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -21,6 +21,11 @@ public class Role {
 	private Long id;
 	
 	@Column(name="role")
-	private String rolename;	
+	private String rolename;
+	
+	/*
+	@ManyToMany(mappedBy = "roles")
+	private Set<AppUser> users = new HashSet<>();
+	*/
 
 }

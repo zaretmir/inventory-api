@@ -1,6 +1,10 @@
 package com.app.products.dto;
 
+import java.util.List;
+
 import javax.validation.constraints.NotBlank;
+
+import com.app.base.product_hangar.model.Product_Hangar;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -16,5 +20,7 @@ public class ProductDto {
 	private String description;
 	
 	private boolean isActive;
+	
+	private List<Product_Hangar> stockEntries;
 
 }

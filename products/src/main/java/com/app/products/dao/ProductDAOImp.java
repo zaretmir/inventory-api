@@ -19,7 +19,7 @@ public class ProductDAOImp implements ProductDAO {
 
 	@Override
 	public Product findById(Long productId) {
-		return productRepository.findById(productId).get();
+		return productRepository.findOneById(productId);
 	}
 	
 	@Override

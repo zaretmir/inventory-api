@@ -2,7 +2,8 @@ package com.app.masterdata.product_hangar.projection;
 
 import org.springframework.beans.factory.annotation.Value;
 
-import com.app.masterdata.price.model.Price;
+import com.app.base.price.model.Price;
+
 
 public interface StockLatestPrice {
 	

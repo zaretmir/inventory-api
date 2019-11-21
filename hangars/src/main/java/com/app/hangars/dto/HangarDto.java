@@ -1,8 +1,12 @@
 package com.app.hangars.dto;
 
+import java.util.List;
+
 import javax.validation.constraints.Digits;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
+
+import com.app.base.product_hangar.model.Product_Hangar;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -26,6 +30,8 @@ public class HangarDto {
 	private Integer phoneNumber;
 	
 	private boolean isActive; // isDeleted (borrado lógico)
+	
+	private List<Product_Hangar> stockEntries;
 
 	public HangarDto() { }
 	

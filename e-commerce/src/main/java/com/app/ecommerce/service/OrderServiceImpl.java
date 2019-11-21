@@ -8,12 +8,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.app.base.exception.ApplicationException;
+import com.app.base.product_hangar.model.Product_Hangar;
 import com.app.ecommerce.dao.OrderDAO;
 import com.app.ecommerce.exception.OrderExceptionCause;
 import com.app.ecommerce.model.Order;
 import com.app.ecommerce.model.OrderItem;
 import com.app.masterdata.price.service.PriceService;
-import com.app.masterdata.product_hangar.model.Product_Hangar;
 import com.app.masterdata.product_hangar.service.Product_HangarService;
 
 @Service
@@ -53,57 +53,80 @@ public class OrderServiceImpl implements OrderService {
 	
 	@Override
 	public Order addItem(OrderItem requestedItem) { // TODO, Refactor for atomicity /!\
-		Order order = this.getOrderById(requestedItem.getOrder().getId());
+		Order origin = this.getOrderById(requestedItem.getOrder().getId());
+		Order order = getOrderCopy(origin);
+		
 		Product_Hangar itemOrigin = stockService.getStockEntry(
-				requestedItem.getItemOrigin().getHangarPk(),
-				requestedItem.getItemOrigin().getProductPk());
+				requestedItem.getItemOrigin().getId().getHangarPk(),
+				requestedItem.getItemOrigin().getId().getProductPk());
+		
+		if (itemOrigin.getQuantity() < requestedItem.getOrderedQuantity())
+			throw new ApplicationException(OrderExceptionCause.NOT_ENOUGH_STOCK);
 		
 		requestedItem.setItemOrigin(itemOrigin);
 		
-		if (requestedItem.getItemOrigin().getQuantity() < requestedItem.getOrderedQuantity())
-			throw new ApplicationException(OrderExceptionCause.NOT_ENOUGH_STOCK);
+		OrderItem savedItem  = updateItem(order, requestedItem);
 		
 		try {
-			updateExistentItem(requestedItem);
-		}
-		catch (ApplicationException ex) { // The product was not yet in the order
-			if (OrderExceptionCause.ITEM_NOT_FOUND.getCode().equals(ex.getMessage())) { // ¡Orden evita null pointer!!!
-				addItemAsNew(order, requestedItem);
-			}
-			else {
-				throw ex; // Ver error si falla bbdd con breakpoint y editar para user
-			}
-		}
-		
-		updateStockQuantity(requestedItem.getItemOrigin(), requestedItem.getOrderedQuantity());
-		updateOrderTotals(order);
-		
+			updateOrderTotals(order);
+			updateStockQuantity(requestedItem.getItemOrigin(), requestedItem.getOrderedQuantity());
+		} catch (ApplicationException ex) {
+			if (OrderExceptionCause.ORDER_TOTALS_ERROR.getCode().equals(ex.getMessage())) {
+				order.removeItem(savedItem);
+				return orderDAO.saveOrder(order);
+			}						
+ 			if (OrderExceptionCause.STOCK_UPDATE_ERROR.getCode().equals(ex.getMessage()))
+				return orderDAO.saveOrder(origin);
+		}	
 		
 		return orderDAO.saveOrder(order);
 	}
 	
-	private void updateExistentItem(OrderItem requestedItem) {
+	private OrderItem updateItem(Order order, OrderItem requestedItem) {
+		try {
+			return updateExistentItem(requestedItem);				
+		}
+		catch (ApplicationException ex) {
+			if (OrderExceptionCause.ITEM_NOT_FOUND.getCode().equals(ex.getMessage()))
+				return addItemAsNew(order, requestedItem);
+			else
+				throw ex;
+		}
+	}
+	
+	private OrderItem updateExistentItem(OrderItem requestedItem) {
 		OrderItem item = itemService.getOrderItem(requestedItem.getOrder(), requestedItem.getItemOrigin());
 		
 		int newQuantity = item.getOrderedQuantity() + requestedItem.getOrderedQuantity();
 		item.setOrderedQuantity(newQuantity);
-		itemService.updateOrderItem(item);
+		return itemService.updateOrderItem(item);
 	}
 	
-	private void addItemAsNew(Order order, OrderItem requestedItem) {
+	private OrderItem addItemAsNew(Order order, OrderItem requestedItem) {
 		OrderItem savedItem = itemService.saveOrderItem(requestedItem);
-		order.getOrderItems().add(savedItem);
+		order.addItem(savedItem);
+		
+		return savedItem;
 	}
 	
-	private void updateStockQuantity(Product_Hangar stockEntry, int quantityRequested) {
-		int quantityRemaining =  stockEntry.getQuantity() - quantityRequested;
-		stockEntry.setQuantity(quantityRemaining);
-		stockService.updateStockEntry(stockEntry);
+	private void updateStockQuantity(Product_Hangar stockEntry, int quantityRequested) { // trow
+		try {
+			int quantityRemaining =  stockEntry.getQuantity() - quantityRequested;
+			stockEntry.setQuantity(quantityRemaining);
+			stockService.updateStockEntry(stockEntry);
+		} catch (ApplicationException ex) {
+			throw new ApplicationException(OrderExceptionCause.STOCK_UPDATE_ERROR);
+		}
+		
 	}
 	
-	private Order updateOrderTotals(Order order) {
-		order = updateTotalItems(order);
-		order = updateTotalAmount(order);		
+	private Order updateOrderTotals(Order order) { // throw ex
+		try {
+			order = updateTotalItems(order);
+			order = updateTotalAmount(order);
+		} catch (ApplicationException ex) {
+			throw new ApplicationException(OrderExceptionCause.ORDER_TOTALS_ERROR);
+		}				
 		
 		return orderDAO.saveOrder(order);
 	}
@@ -120,17 +143,26 @@ public class OrderServiceImpl implements OrderService {
 	
 	private Order updateTotalAmount(Order order) {
 		double totalAmount = order.getOrderItems().stream()
-				.mapToDouble( item -> {
-					double productPrice = priceService.getLatestPrice(item.getItemOrigin()).getPrice();
-					int productQty = item.getOrderedQuantity();
-
-					return productPrice * productQty;
+				.mapToDouble(item -> {
+					return priceService.getLatestPrice(item.getItemOrigin()) * item.getOrderedQuantity();
 				})
 				.sum();
 		
 		order.setTotalAmount(totalAmount);
 		
 		return order;
+	}
+	
+	private Order getOrderCopy(Order origin) {
+		Order copy = new Order();
+		copy.setId(origin.getId());
+		copy.setUser(origin.getUser());
+		copy.setDate(origin.getDate());
+		copy.setTotalAmount(origin.getTotalAmount());
+		copy.setTotalItems(origin.getTotalItems());
+		copy.setOrderItems(origin.getOrderItems());
+		
+		return copy;
 	}
 	
 }

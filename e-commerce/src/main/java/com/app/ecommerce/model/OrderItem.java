@@ -7,7 +7,7 @@ import javax.persistence.IdClass;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-import com.app.masterdata.product_hangar.model.Product_Hangar;
+import com.app.base.product_hangar.model.Product_Hangar;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.Getter;

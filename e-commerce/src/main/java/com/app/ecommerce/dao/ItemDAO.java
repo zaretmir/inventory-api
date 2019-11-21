@@ -1,8 +1,8 @@
 package com.app.ecommerce.dao;
 
+import com.app.base.product_hangar.model.Product_Hangar;
 import com.app.ecommerce.model.Order;
 import com.app.ecommerce.model.OrderItem;
-import com.app.masterdata.product_hangar.model.Product_Hangar;
 
 public interface ItemDAO {
 

@@ -4,19 +4,22 @@ import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.app.base.price.model.Price;
+import com.app.base.product_hangar.model.Product_Hangar;
+import com.app.base.product_hangar.model.Product_Hangar_Id;
 import com.app.masterdata.price.builder.PriceBuilder;
 import com.app.masterdata.price.dto.PriceDto;
-import com.app.masterdata.price.model.Price;
 import com.app.masterdata.price.service.PriceService;
-import com.app.masterdata.product_hangar.model.Product_Hangar;
 import com.app.masterdata.product_hangar.service.Product_HangarService;
 
 @RestController
@@ -30,7 +33,7 @@ public class PriceController {
 	@Autowired
 	Product_HangarService product_HangarService;
 
-	@PutMapping("/entries")
+	@PostMapping("/entries")
 	public Price createPriceEntry(@RequestBody PriceDto priceReq) {
 		priceReq.setDateUpdated(new Date(System.currentTimeMillis()).getTime());
 		
@@ -40,12 +43,14 @@ public class PriceController {
 	}
 	
 	@GetMapping("/entries/{hangar-id}/{product-id}") 
-	public List<Price> getAllEntries(
-			@PathVariable(name = "hanga-id") Long hangarId,
+	public ResponseEntity<List<Price>> getAllEntries(
+			@PathVariable(name = "hangar-id") Long hangarId,
 			@PathVariable(name = "product-id") Long productId) {
 		
-		Product_Hangar productHangar = product_HangarService.getStockEntry(hangarId, productId);
-		return priceService.getPriceHistory(productHangar);
+		Product_Hangar_Id id = new Product_Hangar_Id(hangarId, productId);
+		
+		Product_Hangar productHangar = product_HangarService.getStockEntryById(id);
+		return new ResponseEntity<List<Price>>(priceService.getPriceHistory(productHangar), HttpStatus.OK);
 	}
 	
 	/*

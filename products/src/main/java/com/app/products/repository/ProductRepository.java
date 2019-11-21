@@ -33,6 +33,8 @@ public interface ProductRepository extends CrudRepository<Product, Long>{
 	
 	
 	boolean existsByName(String name);
+
+	Product findOneById(Long productId);
 	
 	// https://stackoverflow.com/questions/40194614/spring-data-jpa-projection-selected-fields-from-the-db
 	// https://www.baeldung.com/spring-data-rest-projections-excerpts

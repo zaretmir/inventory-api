@@ -7,8 +7,8 @@ import org.springframework.data.domain.Example;
 import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.stereotype.Component;
 
-import com.app.masterdata.product_hangar.model.Product_Hangar;
-import com.app.masterdata.product_hangar.projection.StockLatestPrice;
+import com.app.base.product_hangar.model.Product_Hangar;
+import com.app.base.product_hangar.model.Product_Hangar_Id;
 import com.app.masterdata.product_hangar.repository.Product_HangarRepository;
 import com.app.products.dao.ProductDAO;
 import com.app.products.projection.ProductSimplified;
@@ -47,10 +47,16 @@ public class Product_HangarDAOImp implements Product_HangarDAO {
 		return product_HangarRepository.findByHangarPkAndProductPk(hangarId, productId);
 	}
 	
+	
+	@Override
+	public Product_Hangar getStockById(Product_Hangar_Id id) {
+		return product_HangarRepository.findById(id);
+	}
+	/*
 	@Override
 	public List<StockLatestPrice> getStockProjectedByProduct(Long productId) {
 		return product_HangarRepository.findProduct_HangarProjectedForLimitedDataByProductPk(productId);
-	}
+	}*/
 
 	@Override
 	public boolean existsByHangarpkAndProductpk(Product_Hangar updateReq) {
@@ -60,6 +66,10 @@ public class Product_HangarDAOImp implements Product_HangarDAO {
 		
 		return product_HangarRepository.exists(example);
 	}
-	
+
+	@Override
+	public List<Product_Hangar> getStockWithPriceByProduct(Long productId) {
+		return product_HangarRepository.findByProductPriceNotNull(productId);
+	}
 
 }

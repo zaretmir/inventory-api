@@ -11,6 +11,7 @@ public class ProductBuilder {
 		product.setName(dto.getName());
 		product.setDescription(dto.getDescription());
 		product.setActive(dto.isActive());
+		product.setStockEntries(dto.getStockEntries());
 		
 		return product;
 	}
@@ -21,6 +22,7 @@ public class ProductBuilder {
 		dto.setName(product.getName());
 		dto.setDescription(product.getDescription());
 		dto.setActive(product.isActive());
+		dto.setStockEntries(product.getStockEntries());
 		
 		return dto;
 	}

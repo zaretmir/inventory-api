@@ -1,5 +1,15 @@
 package com.security.dto;
 
+import java.util.HashSet;
+import java.util.Set;
+
+import com.app.base.auth.model.Role;
+import com.app.base.user_profile.model.UserProfile;
+
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter @Setter
 public class AppUserDTO {
 	
 	private Long id;
@@ -8,28 +18,8 @@ public class AppUserDTO {
 	
 	private String password;
 	
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
-
-	public String getUsername() {
-		return username;
-	}
-
-	public void setUsername(String username) {
-		this.username = username;
-	}
-
-	public String getPassword() {
-		return password;
-	}
-
-	public void setPassword(String password) {
-		this.password = password;
-	}
-
+	private Set<Role> roles = new HashSet<>();
+	
+	private UserProfile userProfile;
+	
 }

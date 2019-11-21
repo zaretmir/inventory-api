@@ -1,4 +1,4 @@
-package com.app.masterdata.product_hangar.model;
+package com.app.base.product_hangar.model;
 
 import javax.validation.constraints.PositiveOrZero;
 

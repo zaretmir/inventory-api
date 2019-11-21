@@ -1,4 +1,4 @@
-package com.restapi;
+package com.crud;
 
 import static org.junit.Assert.assertTrue;
 
@@ -14,11 +14,12 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import com.app.base.auth.model.AppUser;
 import com.app.base.auth.model.Role;
+import com.empresa.ProductApplication;
 import com.security.repository.RoleRepository;
 import com.security.repository.UserRepository;
 
 @RunWith(SpringRunner.class)
-@SpringBootTest()
+@SpringBootTest(classes = ProductApplication.class)
 public class SpringSecurity01ApplicationTests {
 	
 	@Autowired
@@ -38,6 +39,7 @@ public class SpringSecurity01ApplicationTests {
 		Role adminRole = roleRepo.findByRolename("ADMIN");
 		Role userRole = roleRepo.findByRolename("USER");
 		
+		
 		Set<Role> roles = new HashSet<>();
 		roles.add(adminRole);
 		roles.add(userRole);
@@ -47,7 +49,6 @@ public class SpringSecurity01ApplicationTests {
 				"sami",
 				encoder.encode("sami"),
 				roles);
-		
 		
 		AppUser kevin = new AppUser();
 		kevin.setUsername("kevin");

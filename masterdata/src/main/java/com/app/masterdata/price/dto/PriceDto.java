@@ -3,7 +3,7 @@ package com.app.masterdata.price.dto;
 import javax.validation.constraints.PastOrPresent;
 import javax.validation.constraints.PositiveOrZero;
 
-import com.app.masterdata.product_hangar.model.Product_Hangar;
+import com.app.base.product_hangar.model.Product_Hangar;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -13,7 +13,7 @@ public class PriceDto {
 	
 	private long price_id;
 	
-	private Product_Hangar productHangar;
+	private Product_Hangar stockEntry;
 	
 	@PositiveOrZero(message = "Price cannot be negative")
 	private double price;

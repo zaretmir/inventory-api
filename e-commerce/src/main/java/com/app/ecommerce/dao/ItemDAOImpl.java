@@ -3,10 +3,10 @@ package com.app.ecommerce.dao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.app.base.product_hangar.model.Product_Hangar;
 import com.app.ecommerce.model.Order;
 import com.app.ecommerce.model.OrderItem;
 import com.app.ecommerce.repository.ItemRepository;
-import com.app.masterdata.product_hangar.model.Product_Hangar;
 
 @Component
 public class ItemDAOImpl implements ItemDAO {

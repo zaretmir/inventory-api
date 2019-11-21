@@ -29,4 +29,6 @@ public interface ProductService {
 	Page<Product> getActiveProductsPage(Pageable pageRequest);
 
 	List<Product> getActiveProductsMatchingSearch(String search);
+
+
 }

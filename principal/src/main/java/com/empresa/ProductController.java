@@ -13,9 +13,18 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 import com.app.base.product.model.Product;
+import com.app.base.product_hangar.model.Product_Hangar;
 import com.app.products.builder.ProductBuilder;
 import com.app.products.dto.ProductDto;
 import com.app.products.service.ProductService;
@@ -44,7 +53,7 @@ public class ProductController {
 
 		return new ResponseEntity<List<ProductDto>>(response, HttpStatus.OK);
 	}
-
+	
 	@GetMapping("products/{id}")
 	public ResponseEntity<ProductDto> getProduct(@PathVariable("id") Long id) {
 		Product product = productService.getProductById(id);

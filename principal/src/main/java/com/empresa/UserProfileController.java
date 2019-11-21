@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.app.base.app_user.model.AppUser;
+import com.app.base.auth.model.AppUser;
 import com.app.base.user_profile.model.UserProfile;
 import com.app.user_profile.builder.UserProfileBuilder;
 import com.app.user_profile.dto.UserProfileDto;
@@ -23,7 +23,7 @@ import com.security.service.JwtUserDetailsService;
 @Controller
 @RequestMapping("/api/user-management/")
 @CrossOrigin
-public class ProfileController {
+public class UserProfileController {
 	
 	@Autowired
 	UserProfileService profileService;

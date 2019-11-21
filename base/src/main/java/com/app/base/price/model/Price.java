@@ -1,4 +1,4 @@
-package com.app.masterdata.price.model;
+package com.app.base.price.model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -12,7 +12,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
-import com.app.masterdata.product_hangar.model.Product_Hangar;
+import com.app.base.product_hangar.model.Product_Hangar;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.Getter;
@@ -30,8 +30,9 @@ public class Price {
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumns({
-		@JoinColumn(name = "stock_entry_hangarpk", referencedColumnName = "hangarpk"),
-		@JoinColumn(name = "stock_entry_productpk", referencedColumnName = "productpk")})
+		@JoinColumn(name = "stock_entry_hangarpk", referencedColumnName = "fk_hangar"),
+		@JoinColumn(name = "stock_entry_productpk", referencedColumnName = "fk_product")})
+	//@JoinColumn(name="stock_entry_id", referencedColumnName = "id")
 	@JsonIgnore
 	private Product_Hangar stockEntry;
 	

@@ -137,5 +137,5 @@ public class ProductServiceImp implements ProductService {
 				.filter(propertyName -> wrappedProduct.getPropertyValue(propertyName) == null)
 				.toArray(String[]::new);
 	}
-	
+
 }

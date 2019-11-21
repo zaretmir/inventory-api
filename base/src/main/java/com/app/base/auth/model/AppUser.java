@@ -1,4 +1,8 @@
-package com.app.base.app_user.model;
+package com.app.base.auth.model;
+
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -7,6 +11,9 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
@@ -35,6 +42,12 @@ public class AppUser {
 	@Column(name = "password")
 	private String password;
 	
+	@ManyToMany(fetch = FetchType.EAGER)
+	@JoinTable(name = "user_roles",
+		joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "user_id"),
+		inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "role_id"))
+	private Set<Role> roles = new HashSet<>();
+	
 	@OneToOne(
 		mappedBy = "user",
 		cascade = CascadeType.ALL,
@@ -43,5 +56,16 @@ public class AppUser {
 		)
 	@JsonIgnore
 	private UserProfile userProfile;
+	
+	public AppUser() { }
+
+	public AppUser(String username, String password, Set<Role> roles) {
+		super();
+		this.username = username;
+		this.password = password;
+		this.roles = roles;
+	}
+	
+	
 
 }

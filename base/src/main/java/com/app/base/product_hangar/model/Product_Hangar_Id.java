@@ -1,6 +1,8 @@
-package com.app.masterdata.product_hangar.model;
+package com.app.base.product_hangar.model;
 
 import java.io.Serializable;
+
+import javax.persistence.Embeddable;
 
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -8,6 +10,7 @@ import lombok.Setter;
 
 @Getter @Setter
 @EqualsAndHashCode
+@Embeddable
 public class Product_Hangar_Id implements Serializable {
 	
 	private static final long serialVersionUID = -6267293444346995566L;

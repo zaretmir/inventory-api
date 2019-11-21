@@ -1,7 +1,7 @@
 package com.app.masterdata.price.builder;
 
+import com.app.base.price.model.Price;
 import com.app.masterdata.price.dto.PriceDto;
-import com.app.masterdata.price.model.Price;
 
 public class PriceBuilder {
 	
@@ -9,7 +9,7 @@ public class PriceBuilder {
 		PriceDto dto = new PriceDto();
 		dto.setPrice_id(price.getPrice_id());
 		dto.setPrice(price.getPrice());
-		dto.setProductHangar(price.getStockEntry());
+		dto.setStockEntry(price.getStockEntry());
 		dto.setDateUpdated(price.getDateUpdated());
 		
 		return dto;
@@ -19,7 +19,7 @@ public class PriceBuilder {
 		Price price = new Price();
 		price.setPrice_id(dto.getPrice_id());
 		price.setPrice(dto.getPrice());
-		price.setStockEntry(dto.getProductHangar());
+		price.setStockEntry(dto.getStockEntry());
 		price.setDateUpdated(dto.getDateUpdated());
 		
 		return price;

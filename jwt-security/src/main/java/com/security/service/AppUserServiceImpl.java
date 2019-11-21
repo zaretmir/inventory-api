@@ -3,7 +3,7 @@ package com.security.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.app.base.app_user.model.AppUser;
+import com.app.base.auth.model.AppUser;
 import com.app.base.exception.ApplicationException;
 import com.security.dao.AppUserDAO;
 import com.security.exception.SecurityExceptionCause;

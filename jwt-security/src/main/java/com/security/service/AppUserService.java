@@ -1,6 +1,6 @@
 package com.security.service;
 
-import com.app.base.app_user.model.AppUser;
+import com.app.base.auth.model.AppUser;
 
 public interface AppUserService {
 	

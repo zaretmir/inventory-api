@@ -1,5 +1,8 @@
 package com.security.controller;
 
+import java.util.Set;
+import java.util.stream.Collectors;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -11,9 +14,13 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import com.app.base.auth.model.AppUser;
+import com.security.builder.AppUserBuilder;
 import com.security.config.JwtTokenUtil;
+import com.security.dto.AppUserDTO;
 import com.security.model.JwtRequest;
 import com.security.model.JwtResponse;
+import com.security.service.AppUserService;
 import com.security.service.JwtUserDetailsService;
 
 public class JwtAuthenticationController {
@@ -26,6 +33,9 @@ public class JwtAuthenticationController {
 
 	@Autowired
 	private JwtUserDetailsService userDetailsService;
+	
+	@Autowired
+	AppUserService userService;
 
 	@RequestMapping(value = "/authenticate", method = RequestMethod.POST)
 	public ResponseEntity<?> createAuthenticationToken(@RequestBody JwtRequest authenticationRequest) throws Exception {
@@ -36,8 +46,10 @@ public class JwtAuthenticationController {
 				.loadUserByUsername(authenticationRequest.getUsername());
 
 		final String token = jwtTokenUtil.generateToken(userDetails);
+		AppUser user = userService.getByUsername(authenticationRequest.getUsername());
+		AppUserDTO userDTO = AppUserBuilder.convertToDto(user);
 
-		return ResponseEntity.ok(new JwtResponse(token));
+		return ResponseEntity.ok(new JwtResponse(token, userDTO));
 	}
 
 	private void authenticate(String username, String password) throws Exception {

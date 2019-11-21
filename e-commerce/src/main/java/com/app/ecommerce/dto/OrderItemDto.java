@@ -3,8 +3,8 @@ package com.app.ecommerce.dto;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.PositiveOrZero;
 
+import com.app.base.product_hangar.model.Product_Hangar;
 import com.app.ecommerce.model.Order;
-import com.app.masterdata.product_hangar.model.Product_Hangar;
 
 import lombok.Getter;
 import lombok.Setter;

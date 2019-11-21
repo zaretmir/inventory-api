@@ -6,10 +6,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.app.base.exception.ApplicationException;
+import com.app.base.price.model.Price;
+import com.app.base.product_hangar.model.Product_Hangar;
 import com.app.masterdata.price.dao.PriceDAO;
 import com.app.masterdata.price.exception.PriceExceptionCause;
-import com.app.masterdata.price.model.Price;
-import com.app.masterdata.product_hangar.model.Product_Hangar;
 import com.app.masterdata.product_hangar.service.Product_HangarService;
 import com.app.products.service.ProductService;
 
@@ -27,9 +27,7 @@ public class PriceServiceImp implements PriceService {
 	
 	@Override
 	public Price createPriceEntry(Price price) {
-		Product_Hangar stockEntry = stockService.getStockEntry(
-				price.getStockEntry().getHangarPk(),
-				price.getStockEntry().getProductPk());
+		Product_Hangar stockEntry = stockService.getStockEntryById(price.getStockEntry().getId());
 		
 		price.setStockEntry(stockEntry);
 		
@@ -46,12 +44,12 @@ public class PriceServiceImp implements PriceService {
 	}
 	
 	@Override
-	public Price getLatestPrice(Product_Hangar stockEntry) {
+	public double getLatestPrice(Product_Hangar stockEntry) {
 		Price latestPrice = priceDAO.getLatestPrice(stockEntry);
 		if (latestPrice == null)
 			throw new ApplicationException(PriceExceptionCause.NO_PRICES_SET);
 		
-		return priceDAO.getLatestPrice(stockEntry);
+		return priceDAO.getLatestPrice(stockEntry).getPrice();
 	}
 	
 	@Override

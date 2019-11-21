@@ -3,7 +3,7 @@ package com.app.ecommerce.dto;
 import java.util.Date;
 import java.util.List;
 
-import com.app.base.app_user.model.AppUser;
+import com.app.base.auth.model.AppUser;
 import com.app.ecommerce.model.OrderItem;
 
 import lombok.Getter;

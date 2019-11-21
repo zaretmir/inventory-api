@@ -2,7 +2,9 @@ package com.app.ecommerce.model;
 
 import java.io.Serializable;
 
-import com.app.masterdata.product_hangar.model.Product_Hangar_Id;
+import javax.persistence.Embeddable;
+
+import com.app.base.product_hangar.model.Product_Hangar_Id;
 
 import lombok.EqualsAndHashCode;
 import lombok.Getter;

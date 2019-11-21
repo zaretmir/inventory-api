@@ -2,8 +2,8 @@ package com.app.masterdata.price.service;
 
 import java.util.List;
 
-import com.app.masterdata.price.model.Price;
-import com.app.masterdata.product_hangar.model.Product_Hangar;
+import com.app.base.price.model.Price;
+import com.app.base.product_hangar.model.Product_Hangar;
 
 public interface PriceService {
 	
@@ -15,6 +15,6 @@ public interface PriceService {
 
 	Price createPriceEntry(Price price);
 
-	Price getLatestPrice(Product_Hangar stockEntry);
+	double getLatestPrice(Product_Hangar stockEntry);
 
 }

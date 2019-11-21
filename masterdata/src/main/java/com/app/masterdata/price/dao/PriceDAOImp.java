@@ -7,9 +7,9 @@ import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.app.masterdata.price.model.Price;
+import com.app.base.price.model.Price;
+import com.app.base.product_hangar.model.Product_Hangar;
 import com.app.masterdata.price.repository.PriceRepository;
-import com.app.masterdata.product_hangar.model.Product_Hangar;
 import com.app.products.dao.ProductDAO;
 
 @Component

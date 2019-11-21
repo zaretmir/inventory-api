@@ -13,7 +13,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-import com.app.base.app_user.model.AppUser;
+import com.app.base.auth.model.AppUser;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.Getter;
@@ -44,6 +44,15 @@ public class Order {
 	private int totalItems;
 	
 	@OneToMany(mappedBy = "order", cascade = CascadeType.ALL, orphanRemoval = true)
-	private List<OrderItem> orderItems;	
+	private List<OrderItem> orderItems;
+	
+	public void addItem(OrderItem item) {
+		this.orderItems.add(item);
+	}
+	
+	public void removeItem(OrderItem item) {
+		this.orderItems.remove(item);
+		item.setOrder(null);
+	}
 
 }

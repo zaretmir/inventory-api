@@ -2,8 +2,8 @@ package com.app.masterdata.price.dao;
 
 import java.util.List;
 
-import com.app.masterdata.price.model.Price;
-import com.app.masterdata.product_hangar.model.Product_Hangar;
+import com.app.base.price.model.Price;
+import com.app.base.product_hangar.model.Product_Hangar;
 
 public interface PriceDAO {
 

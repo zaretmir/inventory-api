@@ -8,13 +8,14 @@ public class HangarBuilder {
 	
 	static public Hangar convertToEntity(HangarDto dto) {
 		Hangar hangar = new Hangar();
-		//hangar.setId(dto.getId());
+		hangar.setId(dto.getId());
 		hangar.setName(dto.getName());
 		hangar.setAddress(dto.getAddress());
 		hangar.setOwner(dto.getOwner());
 		hangar.setOwnerEmail(dto.getOwnerEmail());
 		hangar.setPhoneNumber(dto.getPhoneNumber());
 		hangar.setActive(dto.isActive());
+		hangar.setStockEntries(dto.getStockEntries());
 		
 		
 		return hangar;		
@@ -29,7 +30,7 @@ public class HangarBuilder {
 		dto.setOwnerEmail(hangar.getOwnerEmail());
 		dto.setPhoneNumber(hangar.getPhoneNumber());
 		dto.setActive(hangar.isActive());
-		dto.setActive(hangar.isActive());
+		dto.setStockEntries(hangar.getStockEntries());
 		
 		return dto;
 	}

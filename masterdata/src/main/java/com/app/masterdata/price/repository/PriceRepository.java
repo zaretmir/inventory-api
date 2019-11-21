@@ -5,8 +5,8 @@ import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import com.app.masterdata.price.model.Price;
-import com.app.masterdata.product_hangar.model.Product_Hangar;
+import com.app.base.price.model.Price;
+import com.app.base.product_hangar.model.Product_Hangar;
 
 @Repository
 public interface PriceRepository extends JpaRepository<Price, Long>{
