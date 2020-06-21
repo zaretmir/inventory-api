@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="base" />
+        <module name="e-commerce" />
+        <module name="profile" />
+        <module name="jwt-security" />
+        <module name="masterdata" />
+        <module name="products" />
+        <module name="hangars" />
+        <module name="principal" />
+      </profile>
+    </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="base" target="1.8" />
+      <module name="e-commerce" target="1.8" />
+      <module name="hangars" target="1.8" />
+      <module name="inventory-api-rest" target="1.8" />
+      <module name="jwt-security" target="1.8" />
+      <module name="masterdata" target="1.8" />
+      <module name="principal" target="1.8" />
+      <module name="products" target="1.8" />
+      <module name="profile" target="1.8" />
+    </bytecodeTargetLevel>
+  </component>
+  <component name="JavacSettings">
+    <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="base" options="-parameters" />
+      <module name="e-commerce" options="-parameters" />
+      <module name="hangars" options="-parameters" />
+      <module name="jwt-security" options="-parameters" />
+      <module name="masterdata" options="-parameters" />
+      <module name="principal" options="-parameters" />
+      <module name="products" options="-parameters" />
+      <module name="profile" options="-parameters" />
+    </option>
+  </component>
+</project>
