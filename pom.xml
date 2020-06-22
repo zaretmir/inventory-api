@@ -60,5 +60,6 @@
 		<module>e-commerce</module>
 		<module>hangars</module>
 		<module>products</module>
+		<module>profile</module>
 	</modules>
 </project>
